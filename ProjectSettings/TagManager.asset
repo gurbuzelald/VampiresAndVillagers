@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CinemachineTarget
+  - Item
+  - Demon
+  - Baby
+  - Sunak
+  - Enemy
+  - FlickableObject
+  - UIItem
+  - SunakPoint
+  - HorrorItem
   layers:
   - Default
   - TransparentFX
@@ -13,9 +23,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Character
+  - Ground
+  - Demon
   - 
   - 
   - 
