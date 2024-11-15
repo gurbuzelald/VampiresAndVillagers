@@ -15,6 +15,9 @@ public class VampireController : MonoBehaviour
     private RaycastHit[] hit;
     private Ray ray;
 
+    [SerializeField] float radius;
+    [SerializeField] float distance;
+
     private GameObject currentHumanObject;
 
     private void Awake()
@@ -60,18 +63,19 @@ public class VampireController : MonoBehaviour
     {
         ray = new Ray(transform.position, transform.forward);
         ray.origin = transform.position;
-        hit = Physics.SphereCastAll(transform.position, 10, transform.forward, 10);
+        hit = Physics.SphereCastAll(transform.position, radius, transform.forward, distance);
 
         for (int i = 0; i < hit.Length; i++)
         {
-            if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) > 10)
-            {
-                isSeeingHuman = false;
-            }
-            else if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != currentHumanObject)
+            if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != currentHumanObject)
             {
                 currentHumanObject = hit[i].collider.gameObject;
                 isSeeingHuman = true;
+
+                if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) > 10)
+                {
+                    isSeeingHuman = false;
+                }
             }
         }
     }
