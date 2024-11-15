@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 429802436}
   - component: {fileID: 429802441}
   - component: {fileID: 429802440}
+  - component: {fileID: 429802442}
   m_Layer: 0
   m_Name: Vampire
   m_TagString: Vampire
@@ -470,6 +471,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &429802442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429802435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2037cc3f6b52489ab9617aada6ad7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  attackDistance: 10
+  attackDelay: 1
 --- !u!1 &437688226
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,6 +912,7 @@ GameObject:
   - component: {fileID: 1989464941}
   - component: {fileID: 1989464940}
   - component: {fileID: 1989464945}
+  - component: {fileID: 1989464946}
   m_Layer: 0
   m_Name: Human
   m_TagString: Human
@@ -1030,6 +1047,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetsObject: {fileID: 1930676741}
   speed: 3
+--- !u!114 &1989464946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989464938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33def7449f0c443e4afac8fbd038cb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
+  Health: 100
+  initialHealth: 100
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
