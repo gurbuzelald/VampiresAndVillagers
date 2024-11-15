@@ -21,10 +21,11 @@ namespace AdvancedHorrorFPS
 
         private void Start()
         {
+            /*
             if(!AdvancedGameManager.Instance.blinkOnInteractableObjects)
             {
                 this.enabled = false;
-            }
+            }*/
         }
 
         public void Disable()

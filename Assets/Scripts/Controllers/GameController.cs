@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         InitGame();
         SpawnCharacter();
     }
@@ -39,12 +40,12 @@ public class GameController : MonoBehaviour
 
     public void HandleGameTimeStarted()
     {
-        gamePlayUiController.messageUi.ShowMessage(MessageConstants.GameStarted);
+        MessageUi.ShowMessage(MessageConstants.GameStarted);
     }
 
     public void HandleGameTimeFinished()
     {
-        gamePlayUiController.messageUi.ShowMessage(MessageConstants.GameFinished);
+       MessageUi.ShowMessage(MessageConstants.GameFinished);
     }
 }
 

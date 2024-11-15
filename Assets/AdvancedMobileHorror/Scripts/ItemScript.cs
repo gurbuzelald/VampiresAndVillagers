@@ -113,8 +113,6 @@ namespace AdvancedHorrorFPS
             }
         }
 
-        
-
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -123,11 +121,9 @@ namespace AdvancedHorrorFPS
                 {
                     Lock.SetActive(false);
                 }
-                if (AdvancedGameManager.Instance.controllerType == ControllerType.PcAndConsole)
-                {
-                    playerInRange = false;
-                    GameCanvas.Instance.Hide_Warning();
-                }
+
+                playerInRange = false;
+                MessageUi.HideItemMessage();
             }
         }
 
@@ -148,19 +144,16 @@ namespace AdvancedHorrorFPS
 
         private void OnTriggerEnter(Collider other)
         {
-            if(AdvancedGameManager.Instance.controllerType == ControllerType.PcAndConsole)
+            if (other.CompareTag("Player"))
             {
-                if(other.CompareTag("Player"))
+                playerInRange = true;
+                if (itemType == ItemType.Box && GetComponent<BoxScript>().isHolding)
                 {
-                    playerInRange = true;
-                    if(itemType == ItemType.Box && GetComponent<BoxScript>().isHolding)
-                    {
 
-                    }
-                    else
-                    {
-                        GameCanvas.Instance.Show_Warning("Press E to Interact");
-                    }
+                }
+                else
+                {
+                    MessageUi.ShowItemMessage("Press E to Interact");
                 }
             }
         }

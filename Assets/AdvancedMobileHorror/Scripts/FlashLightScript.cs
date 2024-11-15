@@ -25,7 +25,7 @@ namespace AdvancedHorrorFPS
         public void FlashLight_Decision(bool decision)
         {
             Light.enabled = decision;
-            GameCanvas.Instance.Indicator_BlueLight.SetActive(decision);
+          //  GameCanvas.Instance.Indicator_BlueLight.SetActive(decision);
         }
 
         private void Start()
@@ -35,41 +35,36 @@ namespace AdvancedHorrorFPS
 
         public void Grabbed()
         {
-            if(AdvancedGameManager.Instance.controllerType == ControllerType.Mobile)
-            {
-                GameCanvas.Instance.Activate_FlashLightButton();
-            }
-            else
-            {
-                GameCanvas.Instance.Hide_Warning();
-                GameCanvas.Instance.Show_Warning("Press F for Flashlight!");
-            }
+            MessageUi.HideItemMessage();
+
+            MessageUi.ShowItemMessage("Press F for Flashlight!");
+
             positionTarget = GameObject.Find("FlashLightPoint").transform;
-            if (AdvancedGameManager.Instance.showFPSHands)
-            {
-                HeroPlayerScript.Instance.FPSHands.SetActive(true);
-            }
+
+            HeroPlayerScript.Instance.FPSHands.SetActive(true);
+
             isGrabbed = true;
         }
         private void Update()
         {
             if (!isGrabbed) return;
 
-            if (AdvancedGameManager.Instance.controllerType == ControllerType.PcAndConsole)
+
+            if (Input.GetKeyUp(KeyCode.F))
             {
-                if (Input.GetKeyUp(KeyCode.F))
+                if (Light.enabled)
                 {
-                    FlashLightScript.Instance.FlashLight_Decision(true);
+                    FlashLight_Decision(false);
+                    AudioManager.Instance.Play_Flashlight_Close();
+                }
+                else
+                {
+                    FlashLight_Decision(true);
+                    MessageUi.HideItemMessage();
                     AudioManager.Instance.Play_Flashlight_Open();
+
                 }
-                else if (Input.GetMouseButtonDown(1) && AdvancedGameManager.Instance.controllerType == ControllerType.PcAndConsole)
-                {
-                    GameCanvas.Instance.FlashLight_BlueEffect_Down();
-                }
-                else if (Input.GetMouseButtonUp(1) && AdvancedGameManager.Instance.controllerType == ControllerType.PcAndConsole)
-                {
-                    GameCanvas.Instance.FlashLight_BlueEffect_Up();
-                }
+           
             }
         }
 
@@ -93,7 +88,7 @@ namespace AdvancedHorrorFPS
 
 
 
-            if (GameCanvas.Instance.isFlashBlueNow && BlueBattery > 0)
+            if (/*GameCanvas.Instance.isFlashBlueNow &&*/ BlueBattery > 0)
             {
                 BlueBattery = BlueBattery - Time.deltaTime * BatterySpendNumber * 2;
                 if (!audioSource.isPlaying)
@@ -136,10 +131,10 @@ namespace AdvancedHorrorFPS
             }
             if (BlueBattery <= 0)
             {
-                GameCanvas.Instance.FlashLight_BlueEffect_Up();
+              //  GameCanvas.Instance.FlashLight_BlueEffect_Up();
                 StopAudioBlueLight();
             }
-            GameCanvas.Instance.Image_BlueLight.fillAmount = (BlueBattery / 100);
+           // GameCanvas.Instance.Image_BlueLight.fillAmount = (BlueBattery / 100);
         }
     }
 }
