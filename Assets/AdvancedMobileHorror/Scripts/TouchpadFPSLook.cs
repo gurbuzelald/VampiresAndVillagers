@@ -50,16 +50,9 @@ namespace AdvancedHorrorFPS
             if (!viewTarget)
                 return;
 
-            if(AdvancedGameManager.Instance.controllerType == ControllerType.Mobile)
-            {
-                h += Touchpad.Instance.HorizontalValue * horizontalRotationSpeed * Time.deltaTime * PlayerPrefs.GetFloat("MouseSensivity", 1);
-                v -= Touchpad.Instance.VerticalValue * verticalRotationSpeed * Time.deltaTime * PlayerPrefs.GetFloat("MouseSensivity", 1);
-            }
-            else
-            {
-                h += Input.GetAxis("Mouse X") * horizontalRotationSpeed * PlayerPrefs.GetFloat("MouseSensivity", 1);
-                v -= Input.GetAxis("Mouse Y") * verticalRotationSpeed * PlayerPrefs.GetFloat("MouseSensivity", 1);
-            }
+
+            h += Input.GetAxis("Mouse X") * horizontalRotationSpeed * PlayerPrefs.GetFloat("MouseSensivity", 1);
+            v -= Input.GetAxis("Mouse Y") * verticalRotationSpeed * PlayerPrefs.GetFloat("MouseSensivity", 1);
 
             h = ClampAngle(h, -360.0f, 360.0f);
             v = ClampAngle(v, minVerticalAngle, maxVerticalAngle);

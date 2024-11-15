@@ -82,7 +82,7 @@ namespace AdvancedHorrorFPS
 
         public void UpdateHealth()
         {
-            Text_Health.text = HeroPlayerScript.Instance.Health.ToString();
+           
         }
 
         void Update()

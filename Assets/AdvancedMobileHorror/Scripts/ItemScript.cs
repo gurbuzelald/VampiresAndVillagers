@@ -59,12 +59,14 @@ namespace AdvancedHorrorFPS
             }
             else if (itemType == ItemType.MedKit)
             {
+                Debug.LogError("Bug");
+                /*
                 if(HeroPlayerScript.Instance.Health < 100)
                 {
                     HeroPlayerScript.Instance.Get_Health();
                     AudioManager.Instance.Play_Item_Grab();
                     Destroy(gameObject);
-                }
+                */
             }
             else if (itemType == ItemType.WoodToBreak)
             {

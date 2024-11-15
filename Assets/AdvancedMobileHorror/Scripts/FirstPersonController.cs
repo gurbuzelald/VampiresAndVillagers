@@ -81,14 +81,9 @@ namespace AdvancedHorrorFPS
 		private void Move()
 		{
 			float targetSpeed = MoveSpeed;
-			if (AdvancedGameManager.Instance.controllerType == ControllerType.Mobile)
-			{
-				_input = new Vector2(SimpleJoystick.Instance.HorizontalValue, SimpleJoystick.Instance.VerticalValue);
-			}
-			else
-            {
-				_input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-			}
+
+			_input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
 			if (_input == Vector2.zero) targetSpeed = 0.0f;
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 			float speedOffset = 0.1f;
@@ -114,7 +109,7 @@ namespace AdvancedHorrorFPS
 
 		private void JumpAndGravity()
 		{
-			if(Input.GetKeyUp(KeyCode.Space) && AdvancedGameManager.Instance.canJump && AdvancedGameManager.Instance.controllerType == ControllerType.PcAndConsole)
+			if(Input.GetKeyUp(KeyCode.Space))
             {
 				Jump();
 			}

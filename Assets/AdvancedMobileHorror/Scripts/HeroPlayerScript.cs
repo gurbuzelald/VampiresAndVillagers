@@ -10,7 +10,6 @@ namespace AdvancedHorrorFPS
         public FirstPersonController firstPersonController;
         public CharacterController characterController;
         public Transform DemonComingPoint;
-        public int Health = 100;
         public List<int> Keys_Grabbed = new List<int>();
         [HideInInspector]
         public GameObject Carrying_Ladder = null;
@@ -18,34 +17,44 @@ namespace AdvancedHorrorFPS
         public FlashLightScript FlashLight;
         public bool isHoldingBox = false;
 
+        public HealthComponent healthComponent;
 
         void Start()
         {
+            healthComponent.OnPlayerDead += HandlePlayerDead;
+
+            healthComponent.OnPlayerGetDamage += HandlePlayerGetDamage;
+
             Time.timeScale = 1;
-            GameCanvas.Instance.UpdateHealth();
         }
 
         public void GetDamage(int Damage)
         {
-            Health = Health - Damage;
+            healthComponent.GetDamage(Damage);
+
             GameCanvas.Instance.Show_Blood_Effect();
-            if (Health < 0) Health = 0;
-            GameCanvas.Instance.UpdateHealth();
-            if(Health <= 0)
+        }
+
+
+        public void HandlePlayerDead()
+        {
+            DeactivatePlayer();
+
+            TouchpadFPSLook.Instance.fCamShakeImpulse = 1;
+
+            GameCanvas.Instance.Show_GameOverPanel();
+
+            if (AdvancedGameManager.Instance.showFPSHands)
             {
-                DeactivatePlayer();
-                TouchpadFPSLook.Instance.fCamShakeImpulse = 1;
-                GameCanvas.Instance.Show_GameOverPanel();
-                if(AdvancedGameManager.Instance.showFPSHands)
-                {
-                    HeroPlayerScript.Instance.FPSHands.SetActive(false);
-                }
-            }
-            else
-            {
-                TouchpadFPSLook.Instance.fCamShakeImpulse = 0.5f;
+                FPSHands.gameObject.SetActive(false);
             }
         }
+
+        public void HandlePlayerGetDamage()
+        {
+            TouchpadFPSLook.Instance.fCamShakeImpulse = 0.5f;
+        }
+
 
         private void Awake()
         {
@@ -58,10 +67,8 @@ namespace AdvancedHorrorFPS
         }
 
         public void Get_Health()
-        {
-            Health = Health + 50;
-            if (Health > 100) Health = 100;
-            GameCanvas.Instance.UpdateHealth();
+        { 
+            healthComponent.AddHealth(50);
         }
 
         public void ActivatePlayer()

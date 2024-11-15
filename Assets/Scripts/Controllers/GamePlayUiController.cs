@@ -6,4 +6,5 @@ public class GamePlayUiController : MonoBehaviour
 {
     public TimeLineUi timeLineUi;
     public MessageUi messageUi;
+    public PlayerHealthUi playerHealthUi;
 }
