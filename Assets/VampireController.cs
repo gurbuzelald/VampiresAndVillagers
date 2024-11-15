@@ -27,7 +27,7 @@ public class VampireController : MonoBehaviour
 
         if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
         {
-            _currentTargetIndex = (_currentTargetIndex + 1) % _targets.Length;
+            _currentTargetIndex = Random.RandomRange(0, _targets.Length);
         }
     }
 
