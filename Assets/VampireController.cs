@@ -10,8 +10,6 @@ public class VampireController : MonoBehaviour
     private Transform[] _targets;
     private int _currentTargetIndex = 0;
 
-    private bool isSeeingHuman;
-
     private RaycastHit[] hit;
 
     [SerializeField] float radius;
@@ -21,8 +19,7 @@ public class VampireController : MonoBehaviour
 
     private void Awake()
     {
-        isSeeingHuman = false;
-
+        currentHumanObject = null;
         int targetCount = _targetsObject.childCount;
         _targets = new Transform[targetCount];
         for (int i = 0; i < targetCount; i++)
@@ -33,7 +30,7 @@ public class VampireController : MonoBehaviour
 
     void Update()
     {
-        if (!isSeeingHuman)
+        if (currentHumanObject==null)
         {
             if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
             {
@@ -41,6 +38,7 @@ public class VampireController : MonoBehaviour
             }
 
             MoveTowardsCurrentTarget(_targets[_currentTargetIndex]);
+            SendRayToForward();
         }
         else
         {
@@ -50,12 +48,9 @@ public class VampireController : MonoBehaviour
             }
             else
             {
-                isSeeingHuman = false;
                 currentHumanObject = null;
             } 
         }
-
-        SendRayToForward();
     }
 
     private void MoveTowardsCurrentTarget(Transform currentTarget)
@@ -65,22 +60,23 @@ public class VampireController : MonoBehaviour
 
         transform.LookAt(targetPosition);
     }
+
     private bool InDistance(Vector3 targetPosition)
     {
-        return Vector3.Distance(transform.position, targetPosition) <= 10;
+        return Vector3.Distance(transform.position, targetPosition) <= radius;
     }
 
     private void SendRayToForward()
     {
       
-        hit = Physics.SphereCastAll(transform.position, radius, transform.forward, distance);
+        hit = Physics.SphereCastAll(transform.position, radius, transform.forward, radius);
 
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != currentHumanObject)
             {
                 currentHumanObject = hit[i].collider.gameObject;
-                isSeeingHuman = true;
+                Debug.LogError("Finded Human");
             }
         }
     }
