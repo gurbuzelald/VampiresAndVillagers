@@ -7,8 +7,6 @@ public class AttackComponent : MonoBehaviour
 
     public float attackDistance;
 
-    public float attackDelay;
-
     public float attackDelayTimer;
 
     public Action<GameObject> OnAttack;
@@ -23,7 +21,6 @@ public class AttackComponent : MonoBehaviour
     private void Update()
     {
         GetAttackDelayTimer();
-        Attack();
     }
     private float GetAttackDelayTimer()
     {
@@ -37,23 +34,42 @@ public class AttackComponent : MonoBehaviour
         attackDelayTimer = _attackDelayTimer;
     }
 
-    public void Attack()
+    public void Attack(Transform _targetObject)
     {
         if (GetAttackDelayTimer() < 1) return;
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, attackDistance))
+        if(gameObject.CompareTag("Vampire"))
         {
-            currentDamagerHealth = hit.collider.GetComponent<HealthComponent>();
-
-            if (currentDamagerHealth != null)
+            if (Vector3.Distance(gameObject.transform.position, _targetObject.transform.position) < attackDistance)
             {
-                currentDamagerHealth.GetDamage(damage);
+                if (IsAttackableVision(_targetObject))
+                {
+                    currentDamagerHealth = _targetObject.GetComponent<HealthComponent>();
 
-                OnAttack?.Invoke(hit.collider.gameObject);
+                    if (currentDamagerHealth != null)
+                    {
+                        currentDamagerHealth.GetDamage(damage);
 
-                SetAttackDelayTimer(0);
+                        OnAttack?.Invoke(_targetObject.gameObject);
+
+                        SetAttackDelayTimer(0);
+                    }
+                }
             }
         }
+    }
+    private bool IsAttackableVision(Transform targetObject)
+    {
+        Vector3 direction = (targetObject.transform.position - transform.position);
+
+        float distance = direction.magnitude;
+
+        direction = direction.normalized;
+
+        Vector3 forward = transform.forward;
+
+        float degree = Vector3.AngleBetween(forward, direction);
+
+        return degree <= 30 && distance <= 2;
     }
 }

@@ -17,8 +17,12 @@ public class VampireController : MonoBehaviour
 
     private GameObject currentHumanObject;
 
+    private AttackComponent attackComponent;
+
     private void Awake()
     {
+        attackComponent = GetComponent<AttackComponent>();
+
         currentHumanObject = null;
         int targetCount = _targetsObject.childCount;
         _targets = new Transform[targetCount];
@@ -59,6 +63,8 @@ public class VampireController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
         transform.LookAt(targetPosition);
+
+        attackComponent.Attack(currentTarget);
     }
 
     private bool InDistance(Vector3 targetPosition)
