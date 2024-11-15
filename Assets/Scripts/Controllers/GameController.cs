@@ -29,13 +29,18 @@ public class GameController : MonoBehaviour
 
     public void SpawnCharacter()
     {
-       playerEntity = Instantiate(playerEntity);
+        playerEntity = Instantiate(playerEntity);
 
-       playerEntity.gameObject.SetActive(true);
+        playerEntity.gameObject.SetActive(true);
 
         playerEntity.heroPlayerController.healthComponent.OnHealthValueChanged += gamePlayUiController.playerHealthUi.HandlePlayerHealthChanged;
 
         gamePlayUiController.playerHealthUi.HandlePlayerHealthChanged(playerEntity.heroPlayerController.healthComponent.Health);
+
+        playerEntity.heroPlayerController.FlashLight.OnFlashLightActivateStateChanged += gamePlayUiController.itemUi.SetStateLigtingUi;
+
+        playerEntity.heroPlayerController.FlashLight.OnFlashLightAmountChanged += gamePlayUiController.itemUi.HandleLightingAmount;
+
     }
 
     public void HandleGameTimeStarted()

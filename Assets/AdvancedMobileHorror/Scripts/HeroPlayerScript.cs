@@ -21,11 +21,9 @@ namespace AdvancedHorrorFPS
 
         void Start()
         {
-            healthComponent.OnPlayerDead += HandlePlayerDead;
+            healthComponent.OnDead += HandlePlayerDead;
 
-            healthComponent.OnPlayerGetDamage += HandlePlayerGetDamage;
-
-            Time.timeScale = 1;
+            healthComponent.OnGetDamage += HandlePlayerGetDamage;
         }
 
         public void GetDamage(int Damage)

@@ -13,9 +13,9 @@ public class HealthComponent : MonoBehaviour
 
     public Action<int> OnHealthValueChanged;
 
-    public Action OnPlayerDead;
+    public Action OnDead;
 
-    public Action OnPlayerGetDamage;
+    public Action OnGetDamage;
 
     private void Awake()
     {
@@ -33,11 +33,11 @@ public class HealthComponent : MonoBehaviour
         {
             Health = 0;
             isDead = true;
-            OnPlayerDead?.Invoke();
+            OnDead?.Invoke();
         }
         else
         {
-            OnPlayerGetDamage?.Invoke();
+            OnGetDamage?.Invoke();
         }
 
         OnHealthValueChanged?.Invoke(Health);
