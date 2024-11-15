@@ -18,13 +18,13 @@ public class VampireController : MonoBehaviour
 
     private void Awake()
     {
-        currentTargetID = 1;
+        currentTargetID = 0;
     }
     void Start()
     {
-        speed = 0.5f;
+        speed = 3;
         start = _targetsObject.transform.GetChild(0).position;
-        end = _targetsObject.transform.GetChild(1).position;
+        end = _targetsObject.transform.GetChild(currentTargetID).position;
 
         
     }
@@ -32,9 +32,9 @@ public class VampireController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (Vector3.Distance(transform.position, _targetsObject.position) < .1f)
+        if (Vector3.Distance(transform.position, _targetsObject.transform.GetChild(currentTargetID).position) < .1f)
         {
-            if (currentTargetID < _targetsObject.childCount)
+            if (currentTargetID < _targetsObject.childCount-1)
             {
                 currentTargetID++;
             }
@@ -43,10 +43,12 @@ public class VampireController : MonoBehaviour
                 currentTargetID = 0;
             }
             
-        }*/
+        }
+        Debug.Log(currentTargetID);
         
-        transform.position = Vector3.Lerp(_targetsObject.transform.GetChild(0).position, _targetsObject.transform.GetChild(1).position, Mathf.PingPong(Time.time * speed, 1));
+        //transform.position = Vector3.Lerp(_targetsObject.transform.GetChild(0).position, _targetsObject.transform.GetChild(currentTargetID).position, Mathf.PingPong(Time.time * speed, 1));
 
-        //gameObject.transform.LookAt(_targetsObject.GetChild(currentTargetID));
+        gameObject.transform.LookAt(_targetsObject.GetChild(currentTargetID));
+        gameObject.transform.Translate(0f, 0f, Time.deltaTime * speed);
     }
 }
