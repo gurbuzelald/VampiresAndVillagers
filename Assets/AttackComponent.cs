@@ -7,69 +7,50 @@ public class AttackComponent : MonoBehaviour
 
     public float attackDistance;
 
-    public float attackDelayTimer;
+    public float attackLoopTime;
 
     public Action<GameObject> OnAttack;
 
-    private HealthComponent currentDamagerHealth;
+    float lastAttackTime;
 
-    private void Start()
+    private void Awake()
     {
-        attackDelayTimer = 0;
+        lastAttackTime = 0;
+    }
+    
+    public bool IsAttackable(Transform target)
+    {
+        return AttackTimeFinished() && IsAttackableVision(target.position) &&IsAttackableNear(target.position);
     }
 
-    private void Update()
+    public bool AttackTimeFinished()
     {
-        GetAttackDelayTimer();
-    }
-    private float GetAttackDelayTimer()
-    {
-        attackDelayTimer += Time.deltaTime;
-
-        return attackDelayTimer;
-    }
-
-    private void SetAttackDelayTimer(float _attackDelayTimer)
-    {
-        attackDelayTimer = _attackDelayTimer;
+        return Time.time - lastAttackTime >= attackLoopTime;
     }
 
     public void Attack(Transform _targetObject)
     {
-        if (GetAttackDelayTimer() < 1) return;
+        HealthComponent opponentHealth = _targetObject.GetComponent<HealthComponent>();
 
-        if(gameObject.CompareTag("Vampire"))
+        if (opponentHealth!= null)
         {
-            if (Vector3.Distance(gameObject.transform.position, _targetObject.transform.position) < attackDistance)
-            {
-                if (IsAttackableVision(_targetObject))
-                {
-                    currentDamagerHealth = _targetObject.GetComponent<HealthComponent>();
+            opponentHealth.GetDamage(damage);
 
-                    if (currentDamagerHealth != null)
-                    {
-                        currentDamagerHealth.GetDamage(damage);
+            lastAttackTime = Time.time;
 
-                        OnAttack?.Invoke(_targetObject.gameObject);
-
-                        SetAttackDelayTimer(0);
-                    }
-                }
-            }
+            OnAttack?.Invoke(_targetObject.gameObject); 
         }
     }
-    private bool IsAttackableVision(Transform targetObject)
+
+    private bool IsAttackableNear(Vector3 position)
     {
-        Vector3 direction = (targetObject.transform.position - transform.position);
+        return Vector3.Distance(transform.position, position) <= attackDistance;
+    }
+    private bool IsAttackableVision(Vector3 target)
+    {
+        Vector3 direction = (target - transform.position).normalized;
+        float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
 
-        float distance = direction.magnitude;
-
-        direction = direction.normalized;
-
-        Vector3 forward = transform.forward;
-
-        float degree = Vector3.AngleBetween(forward, direction);
-
-        return degree <= 30 && distance <= 2;
+        return angle >= -30f && angle <= 30f;
     }
 }

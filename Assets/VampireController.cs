@@ -19,6 +19,8 @@ public class VampireController : MonoBehaviour
 
     private AttackComponent attackComponent;
 
+    private HealthComponent healtComponent;
+
     private void Awake()
     {
         attackComponent = GetComponent<AttackComponent>();
@@ -49,6 +51,11 @@ public class VampireController : MonoBehaviour
             if (InDistance(currentHumanObject.transform.position))
             {
                 MoveTowardsCurrentTarget(currentHumanObject.transform);
+
+                if (attackComponent.IsAttackable(currentHumanObject.transform))
+                {
+                    attackComponent.Attack(currentHumanObject.transform);
+                }
             }
             else
             {
@@ -61,10 +68,7 @@ public class VampireController : MonoBehaviour
     {
         Vector3 targetPosition = currentTarget.position;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
         transform.LookAt(targetPosition);
-
-        attackComponent.Attack(currentTarget);
     }
 
     private bool InDistance(Vector3 targetPosition)
@@ -82,7 +86,6 @@ public class VampireController : MonoBehaviour
             if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != currentHumanObject)
             {
                 currentHumanObject = hit[i].collider.gameObject;
-                Debug.LogError("Finded Human");
             }
         }
     }

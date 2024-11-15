@@ -34,6 +34,8 @@ public class HealthComponent : MonoBehaviour
             Health = 0;
             isDead = true;
             OnDead?.Invoke();
+            Destroy(this.gameObject);
+            Debug.LogError("Dead " + this.gameObject.name);
         }
         else
         {

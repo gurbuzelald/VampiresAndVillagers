@@ -483,9 +483,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2037cc3f6b52489ab9617aada6ad7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  attackDistance: 5
-  attackDelayTimer: 2
+  damage: 20
+  attackDistance: 1
+  attackLoopTime: 2
 --- !u!1 &437688226
 GameObject:
   m_ObjectHideFlags: 0
