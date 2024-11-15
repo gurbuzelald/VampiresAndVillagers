@@ -25,12 +25,19 @@ public class GameController : MonoBehaviour
 
     public void HandleGameTimeStarted()
     {
-
+        gamePlayUiController.messageUi.ShowMessage(MessageConstants.GameStarted);
     }
 
     public void HandleGameTimeFinished()
     {
-
-
+        gamePlayUiController.messageUi.ShowMessage(MessageConstants.GameFinished);
     }
+}
+
+public class MessageConstants
+{
+    public static string GameStarted = "Game Started";
+
+    public static string GameFinished = "Game Finished";
+
 }
