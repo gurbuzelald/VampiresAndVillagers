@@ -843,24 +843,6 @@ MonoBehaviour:
   gamePlayUiController: {fileID: 1290909183}
   timelineController: {fileID: 773622405}
   playerEntity: {fileID: 1859643004}
---- !u!114 &871759217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263495881750264104}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b9c4d5e53474726922c86e55baf863, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameType: 1
-  controllerType: 0
-  canJump: 1
-  canCarryBoxes: 1
-  showFPSHands: 1
-  blinkOnInteractableObjects: 1
 --- !u!1 &1070441107
 GameObject:
   m_ObjectHideFlags: 0
@@ -3172,12 +3154,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897585769}
   m_CullTransparentMesh: 1
---- !u!1 &1977207170 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 112956, guid: 844d770c99f6cf24da670a158eaf4fe1,
-    type: 3}
-  m_PrefabInstance: {fileID: 263495880717739172}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1977207174 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 22455830, guid: 844d770c99f6cf24da670a158eaf4fe1,
@@ -3402,7 +3378,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdvancedHorrorFPS.GameCanvas, Assembly-CSharp
         m_MethodName: Click_Settings
         m_Mode: 1
@@ -3477,7 +3453,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameCanvas, Assembly-CSharp
         m_MethodName: Click_Pause
         m_Mode: 1
@@ -3876,43 +3852,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263495880931354980}
   m_CullTransparentMesh: 1
---- !u!114 &263495881023797265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780697185522423881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfd21a8f74bed5e47a2982677ad2f388, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Indicator_BlueLight: {fileID: 263495880931354980}
-  Image_BlueLight: {fileID: 263495880931354982}
-  Panel_WarningPanel: {fileID: 263495881066157202}
-  Button_Flashlight: {fileID: 4278691813638664579}
-  Button_Jump: {fileID: 5650715261411222804}
-  layerMaskForInteract:
-    serializedVersion: 2
-    m_Bits: 33
-  BlueLightcolor: {r: 0.36320752, g: 0.5460302, b: 1, a: 1}
-  Panel_GameUI: {fileID: 263495881622881951}
-  Panel_Pause: {fileID: 17058305625465875}
-  Panel_Health: {fileID: 3909927286629166994}
-  Panel_Settings: {fileID: 7344844610986452263}
-  Panel_Note: {fileID: 7452860507422106213}
-  Panel_Note_Text: {fileID: 5995978677778632011}
-  Button_Close_Note_Text: {fileID: 4381632259156075896}
-  Panel_GameOver: {fileID: 705524463256468681}
-  Image_Sprite_Blood: {fileID: 3909927287025096490}
-  Controller_Joystick: {fileID: 214824969}
-  Controller_Touchpad: {fileID: 1977207170}
-  Text_Health: {fileID: 0}
-  isFlashBlueNow: 0
-  LastClickedArea: {fileID: 0}
-  CurrentNote: {fileID: 0}
-  isPaused: 0
 --- !u!1 &263495881066157202
 GameObject:
   m_ObjectHideFlags: 0
@@ -4058,39 +3997,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &263495881750264104
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 263495881750264105}
-  - component: {fileID: 871759217}
-  m_Layer: 0
-  m_Name: AdvancedFPSPlayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &263495881750264105
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263495881750264104}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 856300581803523143}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &263495882385921643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4108,7 +4014,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 263495881023797265}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GameCanvas, Assembly-CSharp
           m_MethodName: FlashLight_BlueEffect_Down
           m_Mode: 1
@@ -4124,7 +4030,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 263495881023797265}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: GameCanvas, Assembly-CSharp
           m_MethodName: FlashLight_BlueEffect_Up
           m_Mode: 1
@@ -4437,7 +4343,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdvancedHorrorFPS.GameCanvas, Assembly-CSharp
         m_MethodName: Click_BacktoMenu
         m_Mode: 1
@@ -4611,25 +4517,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.00012207031, y: -0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &856300581803523143
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780697185522423881}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 263495881750264105}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1010874976582217148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4704,7 +4591,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameCanvas, Assembly-CSharp
         m_MethodName: FlashLight_Click
         m_Mode: 1
@@ -4918,23 +4805,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3059933353485320815}
   m_CullTransparentMesh: 1
---- !u!114 &1600305557332369392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780697185522423881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &1730636949978439706
 GameObject:
   m_ObjectHideFlags: 0
@@ -5531,7 +5401,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdvancedHorrorFPS.GameCanvas, Assembly-CSharp
         m_MethodName: Click_BacktoMenu
         m_Mode: 1
@@ -6340,7 +6210,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdvancedHorrorFPS.GameCanvas, Assembly-CSharp
         m_MethodName: Click_Continue
         m_Mode: 1
@@ -6500,29 +6370,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6508288607282387062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780697185522423881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
 --- !u!1001 &6542640349370009002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6625,29 +6472,6 @@ PrefabInstance:
       addedObject: {fileID: 1645904607}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfdefe035c7114bc3930f5996c0df744, type: 3}
---- !u!223 &6567265466381578982
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6780697185522423881}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!224 &6722193520730279030
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6698,26 +6522,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6780697185522423881
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 856300581803523143}
-  - component: {fileID: 6567265466381578982}
-  - component: {fileID: 6508288607282387062}
-  - component: {fileID: 1600305557332369392}
-  - component: {fileID: 263495881023797265}
-  m_Layer: 5
-  m_Name: GameCanvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!114 &6805791936385494171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6875,7 +6679,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdvancedHorrorFPS.GameCanvas, Assembly-CSharp
         m_MethodName: Click_Restart
         m_Mode: 1
@@ -8427,7 +8231,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdvancedHorrorFPS.GameCanvas, Assembly-CSharp
         m_MethodName: Click_Close_Settings
         m_Mode: 1
@@ -9655,7 +9459,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 263495881023797265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdvancedHorrorFPS.GameCanvas, Assembly-CSharp
         m_MethodName: Hide_Note
         m_Mode: 1
@@ -9925,7 +9729,6 @@ SceneRoots:
   - {fileID: 624229681}
   - {fileID: 343372024}
   - {fileID: 1070441111}
-  - {fileID: 263495881750264105}
   - {fileID: 4163813571703668886}
   - {fileID: 1859643003}
   - {fileID: 1250105075}
