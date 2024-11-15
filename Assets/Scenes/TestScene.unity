@@ -441,8 +441,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetsObject: {fileID: 1631712815}
   speed: 2
-  radius: 30
-  distance: 30
+  radius: 10
+  distance: 10
 --- !u!54 &429802441
 Rigidbody:
   m_ObjectHideFlags: 0

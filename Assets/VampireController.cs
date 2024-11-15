@@ -13,7 +13,6 @@ public class VampireController : MonoBehaviour
     private bool isSeeingHuman;
 
     private RaycastHit[] hit;
-    private Ray ray;
 
     [SerializeField] float radius;
     [SerializeField] float distance;
@@ -45,7 +44,15 @@ public class VampireController : MonoBehaviour
         }
         else
         {
-            MoveTowardsCurrentTarget(currentHumanObject.transform);
+            if (InDistance(currentHumanObject.transform.position))
+            {
+                MoveTowardsCurrentTarget(currentHumanObject.transform);
+            }
+            else
+            {
+                isSeeingHuman = false;
+                currentHumanObject = null;
+            } 
         }
 
         SendRayToForward();
@@ -58,11 +65,14 @@ public class VampireController : MonoBehaviour
 
         transform.LookAt(targetPosition);
     }
+    private bool InDistance(Vector3 targetPosition)
+    {
+        return Vector3.Distance(transform.position, targetPosition) <= 10;
+    }
 
     private void SendRayToForward()
     {
-        ray = new Ray(transform.position, transform.forward);
-        ray.origin = transform.position;
+      
         hit = Physics.SphereCastAll(transform.position, radius, transform.forward, distance);
 
         for (int i = 0; i < hit.Length; i++)
@@ -71,11 +81,6 @@ public class VampireController : MonoBehaviour
             {
                 currentHumanObject = hit[i].collider.gameObject;
                 isSeeingHuman = true;
-
-                if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) > 10)
-                {
-                    isSeeingHuman = false;
-                }
             }
         }
     }
