@@ -12,7 +12,7 @@ public class VampireController : MonoBehaviour
 
     private bool isSeeingHuman;
 
-    private RaycastHit hit;
+    private RaycastHit[] hit;
     private Ray ray;
 
     private GameObject currentHumanObject;
@@ -33,7 +33,7 @@ public class VampireController : MonoBehaviour
     {
         if (!isSeeingHuman)
         {
-            if (Vector3.SqrMagnitude(transform.position - _targets[_currentTargetIndex].position) < 0.1f * 0.1f)
+            if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
             {
                 _currentTargetIndex = Random.Range(0, _targets.Length);
             }
@@ -60,18 +60,19 @@ public class VampireController : MonoBehaviour
     {
         ray = new Ray(transform.position, transform.forward);
         ray.origin = transform.position;
+        hit = Physics.SphereCastAll(transform.position, 10, transform.forward, 10);
 
-        if (Physics.Raycast(ray, out hit, 100f))
+        for (int i = 0; i < hit.Length; i++)
         {
-            if (hit.collider.CompareTag("Human") && hit.collider.gameObject != currentHumanObject)
+            if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) > 10)
             {
-                currentHumanObject = hit.collider.gameObject;
+                isSeeingHuman = false;
+            }
+            else if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != currentHumanObject)
+            {
+                currentHumanObject = hit[i].collider.gameObject;
                 isSeeingHuman = true;
             }
-        }
-        else
-        {
-            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.green);
         }
     }
 }
