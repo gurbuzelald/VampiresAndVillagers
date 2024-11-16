@@ -46,13 +46,15 @@ public class BaseCharacter : MonoBehaviour
     {
         if (isHiding)
         {
+            float nearestDistance = Mathf.Infinity;
+
             for (int i = 0; i < hideAreas.Length; i++)
             {
-                float tempMinDistance = Vector3.Distance(transform.position, hideAreas[0].position);
+                float tempMinDistance = Vector3.Distance(transform.position, hideAreas[i].position);
 
-                if (tempMinDistance > Vector3.Distance(transform.position, hideAreas[i].position))
+                if (tempMinDistance < nearestDistance)
                 {
-                    tempMinDistance = Vector3.Distance(transform.position, hideAreas[i].position);
+                    nearestDistance = tempMinDistance;
 
                     currentHideAreaIndex = i;
                 }
