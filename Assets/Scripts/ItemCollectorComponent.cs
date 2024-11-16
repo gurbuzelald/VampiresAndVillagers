@@ -19,11 +19,8 @@ public class ItemCollectorComponent : MonoBehaviour
         if (other.transform.CompareTag("Item"))
         {
             ItemEntity itemEntity = other.GetComponent<ItemEntity>();
-
             string itemMessage = itemEntity.itemMessage;
-
             targetItem = itemEntity;
-
             MessageUi.ShowItemMessage(itemMessage);
         }
     }
