@@ -119,7 +119,7 @@ public class VampireController : MonoBehaviour
 
         for (int i = 0; i < hit.Length; i++)
         {
-            if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != baseCharacter)
+            if (hit[i].collider.CompareTag("Human"))
             {
                 float tempMinDistance = Vector3.Distance(transform.position, hit[0].collider.gameObject.transform.position);
 
