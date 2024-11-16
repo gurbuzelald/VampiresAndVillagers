@@ -13,4 +13,18 @@ public enum ItemType
 public class ItemEntity : MonoBehaviour
 {
     public ItemType itemType;
+
+    public SphereCollider trigerCollider;
+
+    public string itemMessage;
+
+    private void Awake()
+    {
+        trigerCollider = GetComponent<SphereCollider>();
+    }
+
+    public void SetGrabbedState(bool state)
+    {
+        trigerCollider.enabled = !state;
+    }
 }

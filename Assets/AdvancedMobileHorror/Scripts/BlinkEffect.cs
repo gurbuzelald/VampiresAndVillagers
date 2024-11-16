@@ -15,6 +15,9 @@ namespace AdvancedHorrorFPS
         void Awake()
         {
             ren = GetComponentInChildren<Renderer>();
+
+
+
             a = ren.material;
             a.EnableKeyword("_EMISSION");
         }

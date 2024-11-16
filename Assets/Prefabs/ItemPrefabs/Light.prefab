@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Light
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5a1b13d0dc52782498bd6b1bde86154f, type: 3}
+      propertyPath: m_TagString
+      value: Item
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5a1b13d0dc52782498bd6b1bde86154f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.81
@@ -64,6 +68,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8590686662354050089}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 5a1b13d0dc52782498bd6b1bde86154f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5498188793090454136}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 5a1b13d0dc52782498bd6b1bde86154f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2283369611949139790}
   m_SourcePrefab: {fileID: 100100000, guid: 5a1b13d0dc52782498bd6b1bde86154f, type: 3}
 --- !u!1 &8093428504569280138 stripped
 GameObject:
@@ -133,3 +145,41 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &5498188793090454136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093428504569280138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ab58f51da76401e9424045ed958998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 1
+  trigerCollider: {fileID: 0}
+  isGrabbed: 0
+  Light: {fileID: 8590686662354050089}
+  BlueBattery: 100
+--- !u!135 &2283369611949139790
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093428504569280138}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.4
+  m_Center: {x: -0.0000000037252903, y: 0, z: 0.023001596}
