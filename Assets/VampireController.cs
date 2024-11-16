@@ -134,7 +134,8 @@ public class VampireController : BaseCharacter
             {
                 float tempMinDistance = Vector3.Distance(transform.position, hit[i].gameObject.transform.position);
 
-                if (tempMinDistance < nearestDistance)
+                if (tempMinDistance < nearestDistance &&
+                    !hit[i].gameObject.GetComponent<BaseCharacter>().isHidden)
                 {
                    BaseCharacter newCharacterTarget = hit[i].gameObject.GetComponent<BaseCharacter>();
 
@@ -143,7 +144,7 @@ public class VampireController : BaseCharacter
                         nearestDistance = tempMinDistance;
 
                         baseCharacter = newCharacterTarget;
-                    } 
+                    }
                 }
             }
         }
