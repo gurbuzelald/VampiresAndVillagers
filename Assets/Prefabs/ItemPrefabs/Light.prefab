@@ -159,6 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   trigerCollider: {fileID: 0}
+  itemMessage: To Collect Press E
   isGrabbed: 0
   Light: {fileID: 8590686662354050089}
   BlueBattery: 100

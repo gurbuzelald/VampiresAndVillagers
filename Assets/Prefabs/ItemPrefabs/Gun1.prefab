@@ -435,6 +435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 2
   trigerCollider: {fileID: 0}
+  itemMessage: To Collect Press E
   remainingBullet: 4
   totalBulletInClip: 2
   maxBulletInClip: 2
