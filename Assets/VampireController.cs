@@ -85,25 +85,12 @@ public class VampireController : MonoBehaviour
 
     private void DecreaseHealth()
     {
-        if (currentHumanObject == null)
+        if (IsDecreaseHealth())
         {
-            if (IsDecreaseHealth())
-            {
-                healthComponent.GetDamage(1);
+            healthComponent.GetDamage(1);
 
-                lastDecreaseTime = Time.time;
-            }
+            lastDecreaseTime = Time.time;
         }
-        else
-        {
-            if (IsDecreaseHealth(currentHumanObject.transform))
-            {
-                healthComponent.GetDamage(1);
-
-                lastDecreaseTime = Time.time;
-            }
-        }
-        
     }
 
     public bool DecreaseHealthDelay()
@@ -113,16 +100,7 @@ public class VampireController : MonoBehaviour
 
     private bool IsDecreaseHealth(Transform target = null)
     {
-        if (target)
-        {
-            return !attackComponent.IsAttackable(target) &&
-               DecreaseHealthDelay();
-        }
-        else
-        {
-            return DecreaseHealthDelay();
-        }
-        
+        return DecreaseHealthDelay();
     }
 
     private bool InDistance(Vector3 targetPosition)
