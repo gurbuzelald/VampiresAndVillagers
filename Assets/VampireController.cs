@@ -21,14 +21,14 @@ public class VampireController : MonoBehaviour
     [SerializeField] float decreaseHealthValue;
     private float lastDecreaseTime;
 
-    private HumanController humanController;
+    private BaseCharacter baseCharacter;
 
     private void Awake()
     {
         attackComponent = GetComponent<AttackComponent>();
         healthComponent = GetComponent<HealthComponent>();
 
-        humanController = null;
+        baseCharacter = null;
 
         int targetCount = _targetsObject.childCount;
 
@@ -50,7 +50,7 @@ public class VampireController : MonoBehaviour
     
     private void HandleMovementAndAttack()
     {
-        if (humanController == null)
+        if (baseCharacter == null)
         {
             if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
             {
@@ -62,19 +62,19 @@ public class VampireController : MonoBehaviour
         }
         else
         {
-            if (InDistance(humanController.transform.position) && !humanController.isHidden)
+            if (InDistance(baseCharacter.transform.position) && !baseCharacter.isHidden)
             {
-                MoveTowardsCurrentTarget(humanController.transform);
+                MoveTowardsCurrentTarget(baseCharacter.transform);
 
-                if (attackComponent.IsAttackable(humanController.transform))
+                if (attackComponent.IsAttackable(baseCharacter.transform))
                 {
-                    attackComponent.Attack(humanController.transform);
+                    attackComponent.Attack(baseCharacter.transform);
                     healthComponent.AddHealth(10);
                 }
             }
             else
             {
-                humanController = null;
+                baseCharacter = null;
             }
         }
     }
@@ -117,9 +117,9 @@ public class VampireController : MonoBehaviour
 
         for (int i = 0; i < hit.Length; i++)
         {
-            if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != humanController)
+            if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != baseCharacter)
             {
-                humanController = hit[i].collider.gameObject.GetComponent<HumanController>();
+                baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
             }
         }
     }

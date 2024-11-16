@@ -21,14 +21,17 @@ public class HumanController : MonoBehaviour
 
 
     public bool isHiding;
-    public bool isHidden;
 
     [SerializeField] float hiddenTime;
+
+    private BaseCharacter baseCharacter;
 
     private void Awake()
     {
         isHiding = false;
-        isHidden = false;
+
+        baseCharacter = GetComponent<BaseCharacter>();
+        baseCharacter.isHidden = false;
 
         int targetID = _targetsObject.childCount;
         int hideAreaID = _hideAreasObject.childCount;
@@ -86,7 +89,7 @@ public class HumanController : MonoBehaviour
 
             if (Vector3.Distance(transform.position, _hideAreas[_currentHideAreaIndex].position) < .1f)
             {
-                isHidden = true;
+                baseCharacter.isHidden = true;
 
                 StartCoroutine(DelaySetHiddenFalse());
             }
@@ -97,7 +100,7 @@ public class HumanController : MonoBehaviour
     {
         yield return new WaitForSeconds(hiddenTime);
 
-        isHidden = false;
+        baseCharacter.isHidden = false;
         isHiding = false;
 
         yield return null;
