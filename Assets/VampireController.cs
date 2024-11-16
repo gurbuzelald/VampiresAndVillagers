@@ -113,19 +113,27 @@ public class VampireController : MonoBehaviour
         return Vector3.Distance(transform.position, targetPosition) <= radius;
     }
 
+    private float GetDistance(Vector3 targetPosition)
+    {
+        return Vector3.Distance(transform.position, targetPosition);
+    }
+
     private void SendRayToForward()
     {
         hit = Physics.SphereCastAll(transform.position, radius, transform.forward, radius);
+
+        float nearestDistance = Mathf.Infinity;
 
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].collider.CompareTag("Human"))
             {
-                float tempMinDistance = Vector3.Distance(transform.position, hit[0].collider.gameObject.transform.position);
+                float tempMinDistance = Vector3.Distance(transform.position, hit[i].collider.gameObject.transform.position);
 
-                if (tempMinDistance > Vector3.Distance(transform.position, hit[i].collider.gameObject.transform.position))
+                if (tempMinDistance < nearestDistance)
+
                 {
-                    tempMinDistance = Vector3.Distance(transform.position, hit[i].collider.gameObject.transform.position);
+                    nearestDistance = tempMinDistance;
 
                     baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
                 }
