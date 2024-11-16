@@ -441,6 +441,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba785e83c9fa41c7975562a453015c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHidden: 0
+  isHiding: 0
+  hiddenTime: 10
+  _hideAreasObject: {fileID: 1094070255}
+  hideAreas: []
+  currentHideAreaIndex: 0
   _targetsObject: {fileID: 1631712815}
   speed: 2
   radius: 10
@@ -1084,7 +1090,6 @@ GameObject:
   - component: {fileID: 1347937585}
   - component: {fileID: 1347937587}
   - component: {fileID: 1347937586}
-  - component: {fileID: 1347937588}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Human
@@ -1233,6 +1238,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439b83e4bc7664d7eb93b5be118edb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHidden: 0
+  isHiding: 0
+  hiddenTime: 10
+  _hideAreasObject: {fileID: 1094070255}
+  hideAreas: []
+  currentHideAreaIndex: 0
   moveSpeed: 20
   jumpForce: 30
   cameraTransform: {fileID: 388979225}
@@ -1240,24 +1251,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 512
---- !u!114 &1347937588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347937580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6b7101db1ea4c62b5b9525b53341bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isHidden: 0
-  isHiding: 0
-  hiddenTime: 10
-  _hideAreasObject: {fileID: 1094070255}
-  hideAreas: []
-  currentHideAreaIndex: 0
 --- !u!1 &1376955936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,7 +1460,6 @@ GameObject:
   - component: {fileID: 1989464940}
   - component: {fileID: 1989464945}
   - component: {fileID: 1989464946}
-  - component: {fileID: 1989464947}
   m_Layer: 0
   m_Name: Human
   m_TagString: Human
@@ -1600,6 +1592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21bda9a1f8abc45d4ae8c233852fd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHidden: 0
+  isHiding: 0
+  hiddenTime: 10
+  _hideAreasObject: {fileID: 1094070255}
+  hideAreas: []
+  currentHideAreaIndex: 0
   _targetsObject: {fileID: 1930676741}
   speed: 3
   radius: 3
@@ -1619,24 +1617,6 @@ MonoBehaviour:
   isDead: 0
   Health: 100
   initialHealth: 100
---- !u!114 &1989464947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1989464938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6b7101db1ea4c62b5b9525b53341bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isHidden: 0
-  isHiding: 0
-  hiddenTime: 10
-  _hideAreasObject: {fileID: 1094070255}
-  hideAreas: []
-  currentHideAreaIndex: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

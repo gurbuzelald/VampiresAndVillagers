@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VampireController : MonoBehaviour
+public class VampireController : BaseCharacter
 {
     [SerializeField] private Transform _targetsObject;
     [SerializeField] private float speed;
@@ -113,11 +113,6 @@ public class VampireController : MonoBehaviour
         return Vector3.Distance(transform.position, targetPosition) <= radius;
     }
 
-    private float GetDistance(Vector3 targetPosition)
-    {
-        return Vector3.Distance(transform.position, targetPosition);
-    }
-
     private void SendRayToForward()
     {
         hit = Physics.SphereCastAll(transform.position, radius, transform.forward, radius);
@@ -131,11 +126,15 @@ public class VampireController : MonoBehaviour
                 float tempMinDistance = Vector3.Distance(transform.position, hit[i].collider.gameObject.transform.position);
 
                 if (tempMinDistance < nearestDistance)
-
                 {
                     nearestDistance = tempMinDistance;
 
                     baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
+
+                    // burda isHiding ise en yakın karaketer Loop a giriyor.
+
+                    //2 en yakın hiding degil ona gitmesi gerekiyor ama en yakını buluyor sürekli oda hiding durumda Loop oluyor
+
                 }
             }
         }
