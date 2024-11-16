@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            _rigidbody.AddForce(Vector3.up * jumpForce * Time.deltaTime * 100, ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.up.normalized * jumpForce * Time.deltaTime * 100, ForceMode.Impulse);
         }
     }
 
