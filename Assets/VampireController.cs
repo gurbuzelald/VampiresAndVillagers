@@ -119,7 +119,14 @@ public class VampireController : MonoBehaviour
         {
             if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != baseCharacter)
             {
-                baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
+                float tempMinDistance = Vector3.Distance(transform.position, hit[0].collider.gameObject.transform.position);
+
+                if (tempMinDistance > Vector3.Distance(transform.position, hit[i].collider.gameObject.transform.position))
+                {
+                    tempMinDistance = Vector3.Distance(transform.position, hit[i].collider.gameObject.transform.position);
+
+                    baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
+                }
             }
         }
     }
