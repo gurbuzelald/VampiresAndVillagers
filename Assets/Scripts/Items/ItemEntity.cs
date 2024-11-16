@@ -18,6 +18,8 @@ public class ItemEntity : MonoBehaviour
 
     public string itemMessage;
 
+    public bool isGrabbed;
+
     private void Awake()
     {
         trigerCollider = GetComponent<SphereCollider>();
@@ -26,5 +28,6 @@ public class ItemEntity : MonoBehaviour
     public void SetGrabbedState(bool state)
     {
         trigerCollider.enabled = !state;
+        isGrabbed = state;
     }
 }

@@ -10,8 +10,6 @@ public class Gun :ItemEntity
 
     public int maxBulletInClip;
 
-    private bool isGrabbed;
-
     public void ChangeClip()
     {
         int totalAmount = totalBulletInClip;
@@ -44,7 +42,7 @@ public class Gun :ItemEntity
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetMouseButtonDown(0))
         {
             Fire();
         }

@@ -6,7 +6,6 @@ using AdvancedHorrorFPS;
 
 public class Flash :ItemEntity
 {
-        public bool isGrabbed = false;
         public Light Light;
         public float BlueBattery = 100;
         public Action<bool> OnFlashLightActivateStateChanged;
@@ -48,10 +47,13 @@ public class Flash :ItemEntity
         private void Update()
         {
             if (!isGrabbed)
-            return;
-
-            if (Input.GetKeyUp(KeyCode.F))
             {
+                return;
+             }
+  
+            if (Input.GetMouseButtonDown(0))
+            {
+                
                 if (Light.enabled)
                 {
                     FlashLight_Decision(false);
