@@ -8,4 +8,5 @@ public class GamePlayUiController : MonoBehaviour
     public MessageUi messageUi;
     public PlayerHealthUi playerHealthUi;
     public ItemUi itemUi;
+    public PlayerBagUi playerBagUi;
 }

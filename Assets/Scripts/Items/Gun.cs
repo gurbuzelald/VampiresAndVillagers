@@ -51,16 +51,6 @@ public class Gun :ItemEntity
         {
             ChangeClip();
         }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            DeGrab();
-        }
-    }
-
-    private void DeGrab()
-    {
-        base.SetGrabbedState(false);
     }
 
     private void Fire()
