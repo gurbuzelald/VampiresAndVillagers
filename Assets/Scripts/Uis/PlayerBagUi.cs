@@ -22,18 +22,21 @@ public class PlayerBagUi : MonoBehaviour
     {
         foreach (KeyValuePair<int, ItemEntity> keyValuePair in playerItems)
         {
-            AddToSlot(keyValuePair.Key,keyValuePair.Value.itemName);
+            if(keyValuePair.Value!=null)
+                AddToSlot(keyValuePair.Key,keyValuePair.Value);
         }
     }
 
-    public void AddToSlot(int index,string itemName)
+    public void AddToSlot(int index,ItemEntity itemEntity)
     {
+        string itemName = itemEntity.itemName;
+
         BagSlotUi targetBagSlotUi = bagSlotUis[index];
 
         targetBagSlotUi.SetAsFilled(itemName);
     }
 
-    public void RemoveToSlot(int index)
+    public void RemoveToSlot(int index,ItemEntity itemEntity)
     {
         BagSlotUi targetBagSlotUi = bagSlotUis[index];
 

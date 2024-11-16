@@ -10,7 +10,6 @@ public class ItemCollectorComponent : MonoBehaviour
 
     private void Awake()
     {
-        this.gameObject.AddComponent<BagComponent>();
         bagComponent = GetComponent<BagComponent>();
     }
 

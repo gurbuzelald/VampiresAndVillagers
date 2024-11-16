@@ -41,6 +41,15 @@ public class GameController : MonoBehaviour
 
         playerEntity.heroPlayerController.FlashLight.OnFlashLightAmountChanged += gamePlayUiController.itemUi.HandleLightingAmount;
 
+        PlayerBagUi playerBagUi = gamePlayUiController.playerBagUi;
+
+        BagComponent bagComponent = playerEntity.heroPlayerController.GetComponent<BagComponent>();
+
+        playerBagUi.InitiliaPlayerBagUi(bagComponent.items);
+
+        bagComponent.OnItemAdded += playerBagUi.AddToSlot;
+
+        bagComponent.OnItemRemoved += playerBagUi.RemoveToSlot;
     }
 
     public void HandleGameTimeStarted()

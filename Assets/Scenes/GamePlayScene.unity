@@ -454,6 +454,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7435297032026102103, guid: a8e796d34377e4d9a9770d0005806095,
+        type: 3}
+      propertyPath: itemName
+      value: ShotGun
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1709,6 +1714,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4400366123826789023, guid: c7dc54f74057245b5a09403fcc64b321,
         type: 3}
+      propertyPath: itemName
+      value: HandGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400366123826789023, guid: c7dc54f74057245b5a09403fcc64b321,
+        type: 3}
       propertyPath: itemMessage
       value: To Collect Press E
       objectReference: {fileID: 0}
@@ -2269,7 +2279,7 @@ MonoBehaviour:
   messageUi: {fileID: 1594261214}
   playerHealthUi: {fileID: 3909927286629166995}
   itemUi: {fileID: 1863667030}
-  playerBagUi: {fileID: 0}
+  playerBagUi: {fileID: 614936774}
 --- !u!4 &1290909184
 Transform:
   m_ObjectHideFlags: 0
@@ -3602,6 +3612,19 @@ MonoBehaviour:
   targetItem: {fileID: 0}
   bagComponent: {fileID: 0}
   currentItem: {fileID: 0}
+--- !u!114 &1516972855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516972823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ceab354ffc0e4205b6c15b6c9c66b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialBagSize: 4
 --- !u!1 &1548706417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3758,6 +3781,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5498188793090454136, guid: 76c61004d485a49cdb91c38c2021878c,
+        type: 3}
+      propertyPath: itemName
+      value: Flash
+      objectReference: {fileID: 0}
     - target: {fileID: 5498188793090454136, guid: 76c61004d485a49cdb91c38c2021878c,
         type: 3}
       propertyPath: trigerCollider
@@ -6144,6 +6172,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1516972848}
+    - targetCorrespondingSourceObject: {fileID: 7251140036518580984, guid: 2be7aca9dcc1f49049a50a90af634639,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1516972855}
   m_SourcePrefab: {fileID: 100100000, guid: 2be7aca9dcc1f49049a50a90af634639, type: 3}
 --- !u!224 &1337183264312579354
 RectTransform:
