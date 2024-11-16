@@ -19,9 +19,21 @@ public class HumanController : BaseCharacter
 
     private PointsSingleton pointsSingleton;
 
+
     private void Awake()
     {
         pointsSingleton = FindAnyObjectByType<PointsSingleton>();
+
+        _hideAreasObject = pointsSingleton.hideAreasObject;
+
+        int hideAreaID = _hideAreasObject.childCount;
+
+        hideAreas = new Transform[hideAreaID];
+
+        for (int i = 0; i < hideAreaID; i++)
+        {
+            hideAreas[i] = _hideAreasObject.GetChild(i);
+        }
 
         int targetID = pointsSingleton.humanTargetsObject.childCount;
        

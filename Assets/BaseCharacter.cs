@@ -9,31 +9,16 @@ public class BaseCharacter : MonoBehaviour
 
     [SerializeField] float hiddenTime;
 
-    private Transform _hideAreasObject;
+    public Transform _hideAreasObject;
 
     public Transform[] hideAreas;
 
     public int currentHideAreaIndex = 0;
 
-    private PointsSingleton pointsSingleton;
-
 
     void Awake()
     {
         isHidden = false;
-
-        pointsSingleton = FindAnyObjectByType<PointsSingleton>();
-
-        _hideAreasObject = pointsSingleton.hideAreasObject;
-
-        int hideAreaID = _hideAreasObject.childCount;
-
-        hideAreas = new Transform[hideAreaID];
-
-        for (int i = 0; i < hideAreaID; i++)
-        {
-            hideAreas[i] = _hideAreasObject.GetChild(i);
-        }
 
         currentHideAreaIndex = 0;
     }

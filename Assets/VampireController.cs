@@ -134,6 +134,12 @@ public class VampireController : BaseCharacter
                     baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
                 }
             }
+            if (baseCharacter)
+                if (baseCharacter.isHidden)
+                {
+                    baseCharacter = null;
+                    return;
+                }
         }
     }
 }
