@@ -23,6 +23,8 @@ public class VampireController : MonoBehaviour
     [SerializeField] float decreaseHealthValue;
     private float lastDecreaseTime;
 
+    private HumanController humanController;
+
     private void Awake()
     {
         attackComponent = GetComponent<AttackComponent>();
@@ -59,7 +61,7 @@ public class VampireController : MonoBehaviour
         }
         else
         {
-            if (InDistance(currentHumanObject.transform.position) && !currentHumanObject.GetComponent<HumanController>().isHidden)
+            if (InDistance(currentHumanObject.transform.position) && !humanController.isHidden)
             {
                 MoveTowardsCurrentTarget(currentHumanObject.transform);
 
@@ -116,6 +118,7 @@ public class VampireController : MonoBehaviour
         {
             if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != currentHumanObject)
             {
+                humanController = currentHumanObject.GetComponent<HumanController>();
                 currentHumanObject = hit[i].collider.gameObject;
             }
         }
