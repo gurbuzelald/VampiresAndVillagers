@@ -14,8 +14,6 @@ public class VampireController : MonoBehaviour
 
     [SerializeField] float radius;
 
-    private GameObject currentHumanObject;
-
     private AttackComponent attackComponent;
 
     private HealthComponent healthComponent;
@@ -30,9 +28,12 @@ public class VampireController : MonoBehaviour
         attackComponent = GetComponent<AttackComponent>();
         healthComponent = GetComponent<HealthComponent>();
 
-        currentHumanObject = null;
+        humanController = null;
+
         int targetCount = _targetsObject.childCount;
+
         _targets = new Transform[targetCount];
+
         for (int i = 0; i < targetCount; i++)
         {
             _targets[i] = _targetsObject.GetChild(i);
@@ -49,7 +50,7 @@ public class VampireController : MonoBehaviour
     
     private void HandleMovementAndAttack()
     {
-        if (currentHumanObject == null)
+        if (humanController == null)
         {
             if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
             {
@@ -61,19 +62,19 @@ public class VampireController : MonoBehaviour
         }
         else
         {
-            if (InDistance(currentHumanObject.transform.position) && !humanController.isHidden)
+            if (InDistance(humanController.transform.position) && !humanController.isHidden)
             {
-                MoveTowardsCurrentTarget(currentHumanObject.transform);
+                MoveTowardsCurrentTarget(humanController.transform);
 
-                if (attackComponent.IsAttackable(currentHumanObject.transform))
+                if (attackComponent.IsAttackable(humanController.transform))
                 {
-                    attackComponent.Attack(currentHumanObject.transform);
+                    attackComponent.Attack(humanController.transform);
                     healthComponent.AddHealth(10);
                 }
             }
             else
             {
-                currentHumanObject = null;
+                humanController = null;
             }
         }
     }
@@ -116,10 +117,9 @@ public class VampireController : MonoBehaviour
 
         for (int i = 0; i < hit.Length; i++)
         {
-            if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != currentHumanObject)
+            if (hit[i].collider.CompareTag("Human") && hit[i].collider.gameObject != humanController)
             {
-                humanController = currentHumanObject.GetComponent<HumanController>();
-                currentHumanObject = hit[i].collider.gameObject;
+                humanController = hit[i].collider.gameObject.GetComponent<HumanController>();
             }
         }
     }
