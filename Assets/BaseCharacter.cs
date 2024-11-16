@@ -9,16 +9,22 @@ public class BaseCharacter : MonoBehaviour
 
     [SerializeField] float hiddenTime;
 
-    [SerializeField] private Transform _hideAreasObject;
+    private Transform _hideAreasObject;
 
     public Transform[] hideAreas;
 
     public int currentHideAreaIndex = 0;
 
+    private PointsSingleton pointsSingleton;
+
 
     void Awake()
     {
         isHidden = false;
+
+        pointsSingleton = FindAnyObjectByType<PointsSingleton>();
+
+        _hideAreasObject = pointsSingleton.hideAreasObject;
 
         int hideAreaID = _hideAreasObject.childCount;
 

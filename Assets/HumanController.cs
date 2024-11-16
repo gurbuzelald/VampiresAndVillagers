@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HumanController : BaseCharacter
-{
-    [SerializeField] private Transform _targetsObject;
-    
+{    
     [SerializeField] private float speed;
 
     private Transform[] _targets;
@@ -19,20 +17,20 @@ public class HumanController : BaseCharacter
 
     public Vector3 currentTargetPosition;
 
-    private BaseCharacter baseCharacter;
+    private PointsSingleton pointsSingleton;
 
     private void Awake()
     {
-        baseCharacter = GetComponent<BaseCharacter>();
-        
-        int targetID = _targetsObject.childCount;
+        pointsSingleton = FindAnyObjectByType<PointsSingleton>();
+
+        int targetID = pointsSingleton.humanTargetsObject.childCount;
        
         _targets = new Transform[targetID];
         
 
         for (int i = 0; i < targetID; i++)
         {
-            _targets[i] = _targetsObject.GetChild(i);
+            _targets[i] = pointsSingleton.humanTargetsObject.GetChild(i);
         }
     }
 
@@ -44,7 +42,7 @@ public class HumanController : BaseCharacter
 
         SetRandomTargetIndex();
 
-        baseCharacter.Hide();
+        Hide();
     }
 
     void SetRandomTargetIndex()
@@ -70,11 +68,11 @@ public class HumanController : BaseCharacter
         {
             if (hit[i].collider.CompareTag("Vampire"))
             {
-                currentTargetPosition = baseCharacter.hideAreas[baseCharacter.currentHideAreaIndex].position;
+                currentTargetPosition = hideAreas[currentHideAreaIndex].position;
 
-                baseCharacter.isHiding = true;
+                isHiding = true;
             }
-            else if(!baseCharacter.isHiding)
+            else if(!isHiding)
             {
                 currentTargetPosition = _targets[_currentTargetIndex].position;
             }

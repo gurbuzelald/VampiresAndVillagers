@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class VampireController : BaseCharacter
 {
-    [SerializeField] private Transform _targetsObject;
     [SerializeField] private float speed;
 
     private Transform[] _targets;
@@ -23,20 +22,23 @@ public class VampireController : BaseCharacter
 
     private BaseCharacter baseCharacter;
 
+    private PointsSingleton pointsSingleton;
+
     private void Awake()
     {
         attackComponent = GetComponent<AttackComponent>();
         healthComponent = GetComponent<HealthComponent>();
+        pointsSingleton = FindAnyObjectByType<PointsSingleton>();
 
         baseCharacter = null;
 
-        int targetCount = _targetsObject.childCount;
+        int targetCount = pointsSingleton.vampireTargetsObject.childCount;
 
         _targets = new Transform[targetCount];
 
         for (int i = 0; i < targetCount; i++)
         {
-            _targets[i] = _targetsObject.GetChild(i);
+            _targets[i] = pointsSingleton.vampireTargetsObject.GetChild(i);
         }
     }
 
@@ -130,11 +132,6 @@ public class VampireController : BaseCharacter
                     nearestDistance = tempMinDistance;
 
                     baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
-
-                    // burda isHiding ise en yakın karaketer Loop a giriyor.
-
-                    //2 en yakın hiding degil ona gitmesi gerekiyor ama en yakını buluyor sürekli oda hiding durumda Loop oluyor
-
                 }
             }
         }
