@@ -48,6 +48,13 @@ public class HealthComponent : MonoBehaviour
 
     public void AddHealth(int addValue)
     {
-        Health += addValue;
+        if (Health + addValue > initialHealth)
+        {
+            Health = 100;
+        }
+        else
+        {
+            Health += addValue;
+        }
     }
 }

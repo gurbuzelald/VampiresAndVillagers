@@ -10,6 +10,8 @@ public class HumanController : MonoBehaviour
     private Transform[] _targets;
     private int _currentTargetIndex = 0;
 
+    public float noticeDistance;
+
     private void Awake()
     {
         int targetCount = _targetsObject.childCount;
@@ -38,5 +40,20 @@ public class HumanController : MonoBehaviour
         transform.LookAt(targetPosition);
 
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+    }
+
+
+
+    private bool IsNoticeableNear(Vector3 position)
+    {
+        return Vector3.Distance(transform.position, position) <= noticeDistance;
+    }
+
+    private bool IsNoticeableVision(Vector3 target)
+    {
+        Vector3 direction = (target - transform.position).normalized;
+        float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+
+        return angle >= -90f && angle <= 90f;
     }
 }

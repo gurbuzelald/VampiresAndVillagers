@@ -20,7 +20,7 @@ public class AttackComponent : MonoBehaviour
     
     public bool IsAttackable(Transform target)
     {
-        return AttackTimeFinished() && IsAttackableVision(target.position) &&IsAttackableNear(target.position);
+        return AttackTimeFinished() && IsAttackableVision(target.position) && IsAttackableNear(target.position);
     }
 
     public bool AttackTimeFinished()

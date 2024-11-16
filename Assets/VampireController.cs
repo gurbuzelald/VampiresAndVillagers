@@ -19,11 +19,15 @@ public class VampireController : MonoBehaviour
 
     private AttackComponent attackComponent;
 
-    private HealthComponent healtComponent;
+    private HealthComponent healthComponent;
+
+    [SerializeField] float decreaseHealthValue;
+    private float lastDecreaseTime;
 
     private void Awake()
     {
         attackComponent = GetComponent<AttackComponent>();
+        healthComponent = GetComponent<HealthComponent>();
 
         currentHumanObject = null;
         int targetCount = _targetsObject.childCount;
@@ -36,7 +40,15 @@ public class VampireController : MonoBehaviour
 
     void Update()
     {
-        if (currentHumanObject==null)
+        HandleMovementAndAttack();
+
+        DecreaseHealth();
+    }
+
+    
+    private void HandleMovementAndAttack()
+    {
+        if (currentHumanObject == null)
         {
             if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
             {
@@ -55,12 +67,13 @@ public class VampireController : MonoBehaviour
                 if (attackComponent.IsAttackable(currentHumanObject.transform))
                 {
                     attackComponent.Attack(currentHumanObject.transform);
+                    healthComponent.AddHealth(10);
                 }
             }
             else
             {
                 currentHumanObject = null;
-            } 
+            }
         }
     }
 
@@ -69,6 +82,48 @@ public class VampireController : MonoBehaviour
         Vector3 targetPosition = currentTarget.position;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         transform.LookAt(targetPosition);
+    }
+
+    private void DecreaseHealth()
+    {
+        if (currentHumanObject == null)
+        {
+            if (IsDecreaseHealth())
+            {
+                healthComponent.GetDamage(1);
+
+                lastDecreaseTime = Time.time;
+            }
+        }
+        else
+        {
+            if (IsDecreaseHealth(currentHumanObject.transform))
+            {
+                healthComponent.GetDamage(1);
+
+                lastDecreaseTime = Time.time;
+            }
+        }
+        
+    }
+
+    public bool DecreaseHealthDelay()
+    {
+        return Time.time - lastDecreaseTime >= decreaseHealthValue;
+    }
+
+    private bool IsDecreaseHealth(Transform target = null)
+    {
+        if (target)
+        {
+            return !attackComponent.IsAttackable(target) &&
+               DecreaseHealthDelay();
+        }
+        else
+        {
+            return DecreaseHealthDelay();
+        }
+        
     }
 
     private bool InDistance(Vector3 targetPosition)
