@@ -58,7 +58,7 @@ public class VampireController : MonoBehaviour
             }
 
             MoveTowardsCurrentTarget(_targets[_currentTargetIndex]);
-            SendRayToForward();
+
         }
         else
         {
@@ -77,6 +77,8 @@ public class VampireController : MonoBehaviour
                 baseCharacter = null;
             }
         }
+
+        SendRayToForward();
     }
 
     private void MoveTowardsCurrentTarget(Transform currentTarget)
