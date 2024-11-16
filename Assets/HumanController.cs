@@ -19,6 +19,8 @@ public class HumanController : BaseCharacter
 
     private PointsSingleton pointsSingleton;
 
+    [SerializeField] LayerMask layerMask;
+
 
     private void Awake()
     {
@@ -50,44 +52,28 @@ public class HumanController : BaseCharacter
     {
         MoveTowardsCurrentTarget();
 
-        SendRayToForward();
-
         SetRandomTargetIndex();
 
-        Hide();
+        HumanStates(CheckAround(ref hit, transform, radius, ref layerMask), ref currentTargetPosition, _targets[_currentTargetIndex],
+                    ref isHidding, ref isEscaping, ref isPatrolling);
     }
 
     void SetRandomTargetIndex()
     {
-        if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
+        if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f
+            && !isHidding)
         {
             _currentTargetIndex = Random.RandomRange(0, _targets.Length);
         }
     }
 
     private void MoveTowardsCurrentTarget()
-    {        
-        transform.LookAt(currentTargetPosition);
-
-        transform.position = Vector3.MoveTowards(transform.position, currentTargetPosition, speed * Time.deltaTime);
-    }
-
-    private void SendRayToForward()
     {
-        hit = Physics.SphereCastAll(transform.position, radius, transform.forward, radius);
-
-        for (int i = 0; i < hit.Length; i++)
+        if (!isHidding)
         {
-            if (hit[i].collider.CompareTag("Vampire"))
-            {
-                currentTargetPosition = hideAreas[currentHideAreaIndex].position;
+            transform.LookAt(currentTargetPosition);
 
-                isHiding = true;
-            }
-            else if(!isHiding)
-            {
-                currentTargetPosition = _targets[_currentTargetIndex].position;
-            }
+            transform.position = Vector3.MoveTowards(transform.position, currentTargetPosition, speed * Time.deltaTime);
         }
     }
 }
