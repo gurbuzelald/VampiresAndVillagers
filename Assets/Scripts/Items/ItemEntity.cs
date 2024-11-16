@@ -12,6 +12,8 @@ public enum ItemType
 
 public class ItemEntity : MonoBehaviour
 {
+    public string itemName;
+
     public ItemType itemType;
 
     public SphereCollider trigerCollider;

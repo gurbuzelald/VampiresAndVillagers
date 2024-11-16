@@ -516,6 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b4f5b92c1384b87ba8d5a06b14477c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIdText: {fileID: 564724814}
 --- !u!114 &536752493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,7 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a423d75f25bac487b8e42240833abca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bagSlotUis:
+  bagSlots:
   - {fileID: 1231883782}
   - {fileID: 1309992973}
   - {fileID: 536752492}
@@ -2128,6 +2129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b4f5b92c1384b87ba8d5a06b14477c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIdText: {fileID: 662048483}
 --- !u!114 &1231883783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2334,6 +2336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b4f5b92c1384b87ba8d5a06b14477c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIdText: {fileID: 1777288111}
 --- !u!114 &1309992974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3650,6 +3653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b4f5b92c1384b87ba8d5a06b14477c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIdText: {fileID: 1104606784}
 --- !u!114 &1548706420
 MonoBehaviour:
   m_ObjectHideFlags: 0

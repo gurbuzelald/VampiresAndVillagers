@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BagSlotUi : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public TMP_Text itemIdText;
+
+    public void SetAsFilled(string itemId)
     {
-        
+        itemIdText.text = itemId;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetAsEmpty(int index)
     {
-        
+        itemIdText.text = index.ToString();
     }
 }
