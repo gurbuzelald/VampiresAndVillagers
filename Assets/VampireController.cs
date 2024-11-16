@@ -77,6 +77,13 @@ public class VampireController : BaseCharacter
             else
             {
                 baseCharacter = null;
+
+                if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
+                {
+                    _currentTargetIndex = Random.Range(0, _targets.Length);
+                }
+
+                MoveTowardsCurrentTarget(_targets[_currentTargetIndex]);
             }
         }
 
@@ -117,19 +124,19 @@ public class VampireController : BaseCharacter
 
     private void SendRayToForward()
     {
-        hit = Physics.SphereCastAll(transform.position, radius, transform.forward, radius);
+        Collider[] hit = Physics.OverlapSphere(transform.position, radius);
 
         float nearestDistance = Mathf.Infinity;
 
         for (int i = 0; i < hit.Length; i++)
         {
-            if (hit[i].collider.CompareTag("Human"))
+            if (hit[i].CompareTag("Human"))
             {
-                float tempMinDistance = Vector3.Distance(transform.position, hit[i].collider.gameObject.transform.position);
+                float tempMinDistance = Vector3.Distance(transform.position, hit[i].gameObject.transform.position);
 
                 if (tempMinDistance < nearestDistance)
                 {
-                   BaseCharacter newCharacterTarget = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
+                   BaseCharacter newCharacterTarget = hit[i].gameObject.GetComponent<BaseCharacter>();
 
                     if (newCharacterTarget.isHidden==false)
                     {
