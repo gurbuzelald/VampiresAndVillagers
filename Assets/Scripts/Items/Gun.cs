@@ -60,7 +60,7 @@ public class Gun :ItemEntity
 
     private void DeGrab()
     {
-
+        base.SetGrabbedState(false);
     }
 
     private void Fire()

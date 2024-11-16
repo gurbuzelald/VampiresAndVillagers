@@ -28,6 +28,14 @@ public class ItemEntity : MonoBehaviour
     public void SetGrabbedState(bool state)
     {
         trigerCollider.enabled = !state;
+
         isGrabbed = state;
+
+        if (!state)
+        {
+            transform.parent = null;
+            transform.rotation = Quaternion.identity;
+            transform.position = new Vector3(transform.position.x,1f,transform.position.z);
+        }
     }
 }

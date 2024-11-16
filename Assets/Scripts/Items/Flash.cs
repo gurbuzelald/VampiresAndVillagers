@@ -67,6 +67,11 @@ public class Flash :ItemEntity
                 }
             }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            DeGrab();
+        }
+
             if (Light.enabled)
             {
                 BlueBattery -= Time.deltaTime * 0.3f;
@@ -74,6 +79,16 @@ public class Flash :ItemEntity
                 OnFlashLightAmountChanged?.Invoke((int)BlueBattery, 100);
             }
         }
+
+    public void DeGrab()
+    {
+
+        base.SetGrabbedState(false) ;
     }
+        
+    }
+
+
+
 
 
