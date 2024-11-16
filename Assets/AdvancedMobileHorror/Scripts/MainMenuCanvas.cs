@@ -24,12 +24,12 @@ namespace AdvancedHorrorFPS
             Time.timeScale = 1;
         }
 
-        public void Click_Exit()
+        public void HandlePressedExitGame()
         {
             Application.Quit();
         }
 
-        public void Click_PlayGame()
+        public void HandlePressedPlayGame()
         {
             Panel_MainMenu.SetActive(false);
             StartCoroutine(StartToLoadTheGame());
@@ -57,13 +57,13 @@ namespace AdvancedHorrorFPS
             asyncLoad.allowSceneActivation = true;
         }
 
-        public void Click_Settings()
+        public void HandlePressedSettingsButton()
         {
             Panel_Settings.SetActive(true);
             Panel_MainMenu.SetActive(false);
         }
 
-        public void Click_Close_Settings()
+        public void HandlePressedSettingsExitButton()
         {
             Panel_Settings.SetActive(false);
             Panel_MainMenu.SetActive(true);
