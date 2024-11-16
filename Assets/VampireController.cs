@@ -13,7 +13,6 @@ public class VampireController : MonoBehaviour
     private RaycastHit[] hit;
 
     [SerializeField] float radius;
-    [SerializeField] float distance;
 
     private GameObject currentHumanObject;
 
@@ -60,7 +59,7 @@ public class VampireController : MonoBehaviour
         }
         else
         {
-            if (InDistance(currentHumanObject.transform.position))
+            if (InDistance(currentHumanObject.transform.position) && !currentHumanObject.GetComponent<HumanController>().isHidden)
             {
                 MoveTowardsCurrentTarget(currentHumanObject.transform);
 
@@ -133,7 +132,6 @@ public class VampireController : MonoBehaviour
 
     private void SendRayToForward()
     {
-      
         hit = Physics.SphereCastAll(transform.position, radius, transform.forward, radius);
 
         for (int i = 0; i < hit.Length; i++)

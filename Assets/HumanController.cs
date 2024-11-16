@@ -5,55 +5,127 @@ using UnityEngine;
 public class HumanController : MonoBehaviour
 {
     [SerializeField] private Transform _targetsObject;
+    [SerializeField] private Transform _hideAreasObject;
     [SerializeField] private float speed;
 
     private Transform[] _targets;
+    private Transform[] _hideAreas;
     private int _currentTargetIndex = 0;
+    private int _currentHideAreaIndex = 0;
 
-    public float noticeDistance;
+    private RaycastHit[] hit;
+
+    [SerializeField] float radius;
+
+    public Vector3 currentTargetPosition;
+
+
+    public bool isHiding;
+    public bool isHidden;
+
+    [SerializeField] float hiddenTime;
 
     private void Awake()
     {
-        int targetCount = _targetsObject.childCount;
-        _targets = new Transform[targetCount];
-        for (int i = 0; i < targetCount; i++)
+        isHiding = false;
+        isHidden = false;
+
+        int targetID = _targetsObject.childCount;
+        int hideAreaID = _hideAreasObject.childCount;
+
+        _targets = new Transform[targetID];
+        _hideAreas = new Transform[hideAreaID];
+
+        for (int i = 0; i < targetID; i++)
         {
             _targets[i] = _targetsObject.GetChild(i);
         }
+
+        for (int i = 0; i < hideAreaID; i++)
+        {
+            _hideAreas[i] = _hideAreasObject.GetChild(i);
+        }
+
+        _currentHideAreaIndex = 0;
     }
 
     void Update()
     {
-
         MoveTowardsCurrentTarget();
 
+        SendRayToForward();
+
+        SetRandomTargetIndex();
+
+        Hide();
+    }
+
+    void SetRandomTargetIndex()
+    {
         if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
         {
             _currentTargetIndex = Random.RandomRange(0, _targets.Length);
         }
     }
 
+    void Hide()
+    {
+        if (isHiding)
+        {
+            for (int i = 0; i < _hideAreas.Length; i++)
+            {
+                float tempMinDistance = Vector3.Distance(transform.position, _hideAreas[0].position);
+
+                if (tempMinDistance > Vector3.Distance(transform.position, _hideAreas[i].position))
+                {
+                    tempMinDistance = Vector3.Distance(transform.position, _hideAreas[i].position);
+
+                    _currentHideAreaIndex = i;
+                }
+            }
+
+            if (Vector3.Distance(transform.position, _hideAreas[_currentHideAreaIndex].position) < .1f)
+            {
+                isHidden = true;
+
+                StartCoroutine(DelaySetHiddenFalse());
+            }
+        }
+    }
+
+    IEnumerator DelaySetHiddenFalse()
+    {
+        yield return new WaitForSeconds(hiddenTime);
+
+        isHidden = false;
+        isHiding = false;
+
+        yield return null;
+    }
+
     private void MoveTowardsCurrentTarget()
-    {
-        Vector3 targetPosition = _targets[_currentTargetIndex].position;
+    {        
+        transform.LookAt(currentTargetPosition);
 
-        transform.LookAt(targetPosition);
-
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, currentTargetPosition, speed * Time.deltaTime);
     }
 
-
-
-    private bool IsNoticeableNear(Vector3 position)
+    private void SendRayToForward()
     {
-        return Vector3.Distance(transform.position, position) <= noticeDistance;
-    }
+        hit = Physics.SphereCastAll(transform.position, radius, transform.forward, radius);
 
-    private bool IsNoticeableVision(Vector3 target)
-    {
-        Vector3 direction = (target - transform.position).normalized;
-        float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].collider.CompareTag("Vampire"))
+            {
+                currentTargetPosition = _hideAreas[_currentHideAreaIndex].position;
 
-        return angle >= -90f && angle <= 90f;
+                isHiding = true;
+            }
+            else if(!isHiding)
+            {
+                currentTargetPosition = _targets[_currentTargetIndex].position;
+            }
+        }
     }
 }
