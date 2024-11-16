@@ -129,17 +129,16 @@ public class VampireController : BaseCharacter
 
                 if (tempMinDistance < nearestDistance)
                 {
-                    nearestDistance = tempMinDistance;
+                   BaseCharacter newCharacterTarget = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
 
-                    baseCharacter = hit[i].collider.gameObject.GetComponent<BaseCharacter>();
+                    if (newCharacterTarget.isHidden==false)
+                    {
+                        nearestDistance = tempMinDistance;
+
+                        baseCharacter = newCharacterTarget;
+                    } 
                 }
             }
-            if (baseCharacter)
-                if (baseCharacter.isHidden)
-                {
-                    baseCharacter = null;
-                    return;
-                }
         }
     }
 }
