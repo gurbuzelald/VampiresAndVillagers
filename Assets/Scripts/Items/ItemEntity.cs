@@ -24,8 +24,6 @@ public class ItemEntity : MonoBehaviour
 
     public Entity grabedEntity;
 
-    public Action<bool> GrabStateChanged;
-
     private void Awake()
     {
         trigerCollider = GetComponent<SphereCollider>();
@@ -43,7 +41,5 @@ public class ItemEntity : MonoBehaviour
             transform.rotation = Quaternion.identity;
             transform.position = new Vector3(transform.position.x,1f,transform.position.z);
         }
-
-        GrabStateChanged?.Invoke(state);
     }
 }

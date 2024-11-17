@@ -28,6 +28,22 @@ public class ItemUi : MonoBehaviour
         }
     }
 
+    public void DiscardItemUi(ItemEntity itemEntity)
+    {
+        if (itemEntity is Gun)
+        {
+            Gun gun = itemEntity as Gun;
+            gun.OnBulletAmountChanged -= HandleAmountGun;
+            SetStateGunUi(false);
+        }
+        else if (itemEntity is Flash)
+        {
+            Flash flash = itemEntity as Flash;
+            flash.OnFlashLightAmountChanged -= HandleLightingAmount;
+            SetStateLigtingUi(false);
+        }
+    }
+
     public void SetStateGunUi(bool state)
     {
         gunUiParent.gameObject.SetActive(state);
@@ -40,7 +56,7 @@ public class ItemUi : MonoBehaviour
 
     public void HandleAmountGun(int currentBullet,int totalBullet)
     {
-        totalBulletAmountText.text = (currentBullet) + "/" + (totalBullet - currentBullet);
+        totalBulletAmountText.text = (currentBullet) + "/" + (totalBullet);
     }
 
     public void HandleLightingAmount(int current, int total)

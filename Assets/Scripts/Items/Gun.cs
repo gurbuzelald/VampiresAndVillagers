@@ -21,42 +21,14 @@ public class Gun :ItemEntity
 
     public Action<int, int> OnBulletAmountChanged;
 
-    private void Awake()
-    {
-        GrabStateChanged += (bool state) =>
-         {
-             if (state == false)
-             {
-                 OnBulletAmountChanged = null;
-             }
 
-         };
-    }
     public void ChangeClip()
     {
-        int totalAmount = totalBulletInClip;
-
-        int max = maxBulletInClip - totalAmount;
-
-        int bulletCount = 0;
-
-        if (remainingBullet >= max)
-        {
-            remainingBullet -= max;
-            bulletCount = max;
-        }
-        else
-        {
-            bulletCount = remainingBullet;
-            remainingBullet = 0;
-        }
-
-        if (bulletCount > 0)
-        {
-            totalBulletInClip += bulletCount;
-        }
-
-        OnBulletAmountChanged?.Invoke(totalBulletInClip,remainingBullet);
+        int bulletsNeeded = maxBulletInClip - totalBulletInClip;
+        int bulletsToReload = Mathf.Min(bulletsNeeded, remainingBullet);
+        totalBulletInClip += bulletsToReload;
+        remainingBullet -= bulletsToReload;
+        OnBulletAmountChanged?.Invoke(totalBulletInClip, remainingBullet);
     }
 
     bool isFire;

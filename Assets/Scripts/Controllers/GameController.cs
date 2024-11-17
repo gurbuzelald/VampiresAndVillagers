@@ -56,6 +56,7 @@ public class GameController : MonoBehaviour
         ItemCollectorComponent itemCollectorComponent = playerEntity.GetComponentInChildren<ItemCollectorComponent>();
 
         itemCollectorComponent.OnTakeItem += gamePlayUiController.itemUi.SetItemUi;
+        itemCollectorComponent.DiscardItem += gamePlayUiController.itemUi.DiscardItemUi;
     }
 
     public void HandleGameTimeStarted()

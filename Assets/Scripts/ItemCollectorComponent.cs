@@ -10,6 +10,7 @@ public class ItemCollectorComponent : MonoBehaviour
     public Hand rightHand;
     public Hand leftHand;
     public Action<ItemEntity> OnTakeItem;
+    public Action<ItemEntity> DiscardItem;
 
     private void Awake()
     {
@@ -204,6 +205,7 @@ public class ItemCollectorComponent : MonoBehaviour
         {
             bagComponent.RemoveItem(rightHand.currentItemOnHand);
             rightHand.currentItemOnHand.SetGrabbedState(false);
+            DiscardItem?.Invoke(rightHand.currentItemOnHand);
             rightHand.currentItemOnHand = null;
             SwapItemToHand(rightHand,leftHand);
         }
@@ -211,6 +213,7 @@ public class ItemCollectorComponent : MonoBehaviour
         {
             bagComponent.RemoveItem(leftHand.currentItemOnHand);
             leftHand.currentItemOnHand.SetGrabbedState(false);
+            DiscardItem?.Invoke(leftHand.currentItemOnHand);
             leftHand.currentItemOnHand = null;
         }
     }
@@ -220,7 +223,9 @@ public class ItemCollectorComponent : MonoBehaviour
         if (hand.currentItemOnHand != null)
         {
             hand.currentItemOnHand.gameObject.SetActive(false);
+            DiscardItem?.Invoke(hand.currentItemOnHand);
             hand.currentItemOnHand = null;
+
         }
     }
 

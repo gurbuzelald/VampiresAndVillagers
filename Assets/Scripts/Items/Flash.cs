@@ -15,14 +15,6 @@ public class Flash :ItemEntity
         void Awake()
         {
             BlueBattery = UnityEngine.Random.RandomRange(maxAmontBattery/2, maxAmontBattery);
-
-        GrabStateChanged += (bool state) =>
-         {
-             if (state == false)
-             {
-                 OnFlashLightAmountChanged = null;
-             }
-         };
         }
 
         public void FlashLight_Decision(bool decision)
