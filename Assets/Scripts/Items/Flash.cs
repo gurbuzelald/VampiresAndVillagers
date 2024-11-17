@@ -51,7 +51,7 @@ public class Flash :ItemEntity
                 return;
              }
   
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 
                 if (Light.enabled)

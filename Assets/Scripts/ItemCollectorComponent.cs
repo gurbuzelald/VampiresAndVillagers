@@ -6,7 +6,8 @@ public class ItemCollectorComponent : MonoBehaviour
 {
     public ItemEntity targetItem;
     public BagComponent bagComponent;
-    public ItemEntity currentItem;
+    public Hand rightHand;
+    public Hand leftHand;
 
     private void Awake()
     {
@@ -47,17 +48,62 @@ public class ItemCollectorComponent : MonoBehaviour
                 else
                 {
                     MessageUi.HideItemMessage();
-                    if (currentItem != null)
-                    {
-                        currentItem.gameObject.SetActive(false);
-                    }
 
+                    Hand targetHand = null;
+
+                    ItemType itemType = targetItem.itemType;
+
+                    if (itemType == ItemType.TwoHand)
+                    {
+                        Debug.LogError("No Hand");
+                        NoHand();
+                        targetHand = rightHand;
+                    }
+                    else
+                    {
+                        if (rightHand.currentItemOnHand != null)
+                        {
+                            if (rightHand.currentItemOnHand.itemType == ItemType.TwoHand)
+                            {
+                                AddItemToBage(rightHand);
+                                targetHand = rightHand;
+                            }
+                            else
+                            {
+                                if (leftHand.currentItemOnHand != null)
+                                {
+                                    AddItemToBage(rightHand);
+                                    targetHand = rightHand;
+                                }
+                                else
+                                {
+                                    targetHand = leftHand;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (rightHand.currentItemOnHand == null)
+                            {
+                                targetHand = rightHand;
+                            }
+                            else if (leftHand.currentItemOnHand == null)
+                            {
+                                targetHand = leftHand;
+                            }
+                            else
+                            {
+                                AddItemToBage(leftHand);
+                                targetHand = leftHand;
+                            }
+
+                        }
+                       
+                    }
+              
                     targetItem.SetGrabbedState(true);
                     targetItem.grabedEntity = GetComponentInParent<Entity>();
-                    targetItem.transform.parent = this.transform;
-                    targetItem.transform.localRotation = Quaternion.identity;
-                    targetItem.transform.localPosition = Vector3.up + Vector3.forward;
-                    currentItem = targetItem;
+                    targetHand.SetHandToItem(targetItem);
                     bagComponent.AddItem(targetItem);
                     targetItem = null;
                 }
@@ -66,14 +112,12 @@ public class ItemCollectorComponent : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (currentItem != null)
-            {
-                DropItem();
-            }
+            DropItem();
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ItemEntity itemEntity = bagComponent.GetItem(1);
+
             if (itemEntity != null)
                 UseItemOnBage(itemEntity);
         }
@@ -102,18 +146,100 @@ public class ItemCollectorComponent : MonoBehaviour
 
     private void UseItemOnBage(ItemEntity itemEntity)
     {
-        if (currentItem != null)
-            currentItem.gameObject.SetActive(false);
+        if (itemEntity.itemType == ItemType.TwoHand)
+        {
+            NoHand();
+            rightHand.SetHandToItem(itemEntity);
+        }
+        else
+        {
+            if (rightHand.currentItemOnHand == null)
+            {
+                rightHand.SetHandToItem(itemEntity);
+            }
+            else if (leftHand.currentItemOnHand == null)
+            {
+                if (rightHand.currentItemOnHand.itemType == ItemType.TwoHand)
+                {
+                    AddItemToBage(rightHand);
 
-        currentItem = itemEntity;
-        currentItem.gameObject.SetActive(true);
+                    rightHand.SetHandToItem(itemEntity);
+                }
+                else
+                {
+                    
+                    leftHand.SetHandToItem(itemEntity);
+                }
+            }
+            else
+            {
+                if (rightHand.currentItemOnHand.itemType == ItemType.TwoHand)
+                {
+                    NoHand();
+
+                    rightHand.SetHandToItem(itemEntity);
+                }
+                else
+                {
+                    AddItemToBage(leftHand);
+                   leftHand.SetHandToItem(itemEntity);
+                }
+           
+            }
+
+        }
+
+
     }
+
+    public void NoHand()
+    {
+        AddItemToBage(rightHand);
+        AddItemToBage(leftHand);
+    }
+
 
     public void DropItem()
     {
-        bagComponent.RemoveItem(currentItem);
-        currentItem.SetGrabbedState(false);
-        currentItem = null;
+        if (rightHand.currentItemOnHand != null)
+        {
+            bagComponent.RemoveItem(rightHand.currentItemOnHand);
+            rightHand.currentItemOnHand.SetGrabbedState(false);
+            SwapItemToHand(rightHand,leftHand);
+        }
+        else if (leftHand.currentItemOnHand != null)
+        {
+            bagComponent.RemoveItem(leftHand.currentItemOnHand);
+            leftHand.currentItemOnHand.SetGrabbedState(false);
+        }
+    
+    }
+
+
+    public void AddItemToBage(Hand hand)
+    {
+        if (hand.currentItemOnHand != null)
+        {
+            hand.currentItemOnHand.gameObject.SetActive(false);
+            hand.currentItemOnHand = null;
+        }
+    }
+
+    public void SwapItemToHand(Hand currentItemHand,Hand targetItemHand)
+    {
+        ItemEntity itemEntity = currentItemHand.currentItemOnHand;
+
+        ItemEntity itemEntity2 = targetItemHand.currentItemOnHand;
+
+        if (itemEntity != null)
+        {
+            targetItemHand.SetHandToItem(itemEntity);
+        }
+
+        if (itemEntity2 != null)
+        {
+           currentItemHand.SetHandToItem(itemEntity2);
+        }
     }
 }
 
