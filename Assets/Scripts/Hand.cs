@@ -9,6 +9,10 @@ public class Hand : MonoBehaviour
 
     public Transform spawnPointItem;
 
+    public float speed = 20;
+
+    public Transform target;
+
     public void SetHandToItem(ItemEntity itemEntity)
     {
         currentItemOnHand = itemEntity;
@@ -18,5 +22,13 @@ public class Hand : MonoBehaviour
         itemEntity.transform.position = spawnPointItem.transform.position;
 
         itemEntity.transform.rotation = spawnPointItem.transform.rotation;
+    }
+
+    private void LateUpdate()
+    {
+        Vector3 dir = target.position - transform.position;
+        Quaternion rot = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, speed * Time.deltaTime);
+
     }
 }

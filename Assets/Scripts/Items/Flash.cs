@@ -10,10 +10,19 @@ public class Flash :ItemEntity
         public float BlueBattery = 100;
         public Action<bool> OnFlashLightActivateStateChanged;
         public Action<int, int> OnFlashLightAmountChanged;
+        public int maxAmontBattery = 100;
 
         void Awake()
         {
-            BlueBattery = UnityEngine.Random.RandomRange(70, 100);
+            BlueBattery = UnityEngine.Random.RandomRange(maxAmontBattery/2, maxAmontBattery);
+
+        GrabStateChanged += (bool state) =>
+         {
+             if (state == false)
+             {
+                 OnFlashLightAmountChanged = null;
+             }
+         };
         }
 
         public void FlashLight_Decision(bool decision)
@@ -25,7 +34,7 @@ public class Flash :ItemEntity
         {
             OnFlashLightActivateStateChanged?.Invoke(true);
 
-            OnFlashLightAmountChanged?.Invoke((int)BlueBattery, 100);
+            OnFlashLightAmountChanged?.Invoke((int)BlueBattery, maxAmontBattery);
         }
 
         private void OnDisable()
@@ -71,7 +80,7 @@ public class Flash :ItemEntity
             {
                 BlueBattery -= Time.deltaTime * 0.3f;
 
-                OnFlashLightAmountChanged?.Invoke((int)BlueBattery, 100);
+                OnFlashLightAmountChanged?.Invoke((int)BlueBattery, maxAmontBattery);
             }
         }        
     }

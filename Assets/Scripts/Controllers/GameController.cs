@@ -50,6 +50,12 @@ public class GameController : MonoBehaviour
         bagComponent.OnItemAdded += playerBagUi.AddToSlot;
 
         bagComponent.OnItemRemoved += playerBagUi.RemoveToSlot;
+
+        ItemUi itemUi = gamePlayUiController.itemUi;
+
+        ItemCollectorComponent itemCollectorComponent = playerEntity.GetComponentInChildren<ItemCollectorComponent>();
+
+        itemCollectorComponent.OnTakeItem += gamePlayUiController.itemUi.SetItemUi;
     }
 
     public void HandleGameTimeStarted()

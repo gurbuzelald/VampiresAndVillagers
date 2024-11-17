@@ -53,7 +53,6 @@ public class VampireController : BaseCharacter
         DecreaseHealth();
     }
 
-    
     private void HandleMovementAndAttack()
     {
         if (baseCharacter == null)

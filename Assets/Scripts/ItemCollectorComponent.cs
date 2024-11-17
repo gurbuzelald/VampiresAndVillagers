@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ItemCollectorComponent : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class ItemCollectorComponent : MonoBehaviour
     public BagComponent bagComponent;
     public Hand rightHand;
     public Hand leftHand;
+    public Action<ItemEntity> OnTakeItem;
 
     private void Awake()
     {
@@ -55,7 +57,6 @@ public class ItemCollectorComponent : MonoBehaviour
 
                     if (itemType == ItemType.TwoHand)
                     {
-                        Debug.LogError("No Hand");
                         NoHand();
                         targetHand = rightHand;
                     }
@@ -103,7 +104,7 @@ public class ItemCollectorComponent : MonoBehaviour
               
                     targetItem.SetGrabbedState(true);
                     targetItem.grabedEntity = GetComponentInParent<Entity>();
-                    targetHand.SetHandToItem(targetItem);
+                    SetItemToHand(targetHand,targetItem);
                     bagComponent.AddItem(targetItem);
                     targetItem = null;
                 }
@@ -149,26 +150,24 @@ public class ItemCollectorComponent : MonoBehaviour
         if (itemEntity.itemType == ItemType.TwoHand)
         {
             NoHand();
-            rightHand.SetHandToItem(itemEntity);
+            SetItemToHand(rightHand,itemEntity);
         }
         else
         {
             if (rightHand.currentItemOnHand == null)
             {
-                rightHand.SetHandToItem(itemEntity);
+                SetItemToHand(rightHand,itemEntity);
             }
             else if (leftHand.currentItemOnHand == null)
             {
                 if (rightHand.currentItemOnHand.itemType == ItemType.TwoHand)
                 {
                     AddItemToBage(rightHand);
-
-                    rightHand.SetHandToItem(itemEntity);
+                    SetItemToHand(rightHand,itemEntity);
                 }
                 else
                 {
-                    
-                    leftHand.SetHandToItem(itemEntity);
+                    SetItemToHand(leftHand,itemEntity);
                 }
             }
             else
@@ -176,20 +175,21 @@ public class ItemCollectorComponent : MonoBehaviour
                 if (rightHand.currentItemOnHand.itemType == ItemType.TwoHand)
                 {
                     NoHand();
-
-                    rightHand.SetHandToItem(itemEntity);
+                    SetItemToHand(rightHand,itemEntity);
                 }
                 else
                 {
                     AddItemToBage(leftHand);
-                   leftHand.SetHandToItem(itemEntity);
-                }
-           
+                    SetItemToHand(leftHand,itemEntity);
+                } 
             }
-
         }
+    }
 
-
+    public void SetItemToHand(Hand hand,ItemEntity itemEntity)
+    {
+       hand.SetHandToItem(itemEntity);
+       OnTakeItem?.Invoke(itemEntity);
     }
 
     public void NoHand()
@@ -197,7 +197,6 @@ public class ItemCollectorComponent : MonoBehaviour
         AddItemToBage(rightHand);
         AddItemToBage(leftHand);
     }
-
 
     public void DropItem()
     {
@@ -214,9 +213,7 @@ public class ItemCollectorComponent : MonoBehaviour
             leftHand.currentItemOnHand.SetGrabbedState(false);
             leftHand.currentItemOnHand = null;
         }
-    
     }
-
 
     public void AddItemToBage(Hand hand)
     {
@@ -235,12 +232,12 @@ public class ItemCollectorComponent : MonoBehaviour
 
         if (itemEntity != null)
         {
-            targetItemHand.SetHandToItem(itemEntity);
+            SetItemToHand(targetItemHand,itemEntity);
         }
 
         if (itemEntity2 != null)
         {
-           currentItemHand.SetHandToItem(itemEntity2);
+            SetItemToHand(currentItemHand, itemEntity2);
         }
     }
 }

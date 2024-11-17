@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Gun :ItemEntity
 {
-    [SerializeField] private int remainingBullet;
+    public int remainingBullet;
 
-    [SerializeField] int totalBulletInClip;
+   public int totalBulletInClip;
 
     public int maxBulletInClip;
 
@@ -18,6 +19,19 @@ public class Gun :ItemEntity
 
     public Transform bulletSpawnPoint;
 
+    public Action<int, int> OnBulletAmountChanged;
+
+    private void Awake()
+    {
+        GrabStateChanged += (bool state) =>
+         {
+             if (state == false)
+             {
+                 OnBulletAmountChanged = null;
+             }
+
+         };
+    }
     public void ChangeClip()
     {
         int totalAmount = totalBulletInClip;
@@ -41,6 +55,8 @@ public class Gun :ItemEntity
         {
             totalBulletInClip += bulletCount;
         }
+
+        OnBulletAmountChanged?.Invoke(totalBulletInClip,remainingBullet);
     }
 
     bool isFire;
@@ -82,6 +98,8 @@ public class Gun :ItemEntity
         if (totalBulletInClip > 0)
         {
             totalBulletInClip--;
+
+            OnBulletAmountChanged?.Invoke(totalBulletInClip, remainingBullet);
 
             StartCoroutine(GunAnimation());
 
