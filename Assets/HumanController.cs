@@ -58,8 +58,6 @@ public class HumanController : BaseCharacter
     {
         hits = CheckAround(transform, radius, layerMask);
 
-        //MoveTowardsCurrentTarget();
-
         SetRandomTargetIndex();
 
         HandleStates(hits, ref currentTargetPosition, _targets[_currentTargetIndex]);
@@ -71,16 +69,6 @@ public class HumanController : BaseCharacter
             && currentState != State.Hiding)
         {
             _currentTargetIndex = Random.RandomRange(0, _targets.Length);
-        }
-    }
-
-    private void MoveTowardsCurrentTarget()
-    {
-        if (currentState != State.Hiding)
-        {
-            transform.LookAt(currentTargetPosition);
-
-            transform.position = Vector3.MoveTowards(transform.position, currentTargetPosition, speed * Time.deltaTime);
         }
     }
 
@@ -110,7 +98,6 @@ public class HumanController : BaseCharacter
 
     private void Patrol(ref Vector3 currentTargetPosition, Transform patrolTarget)
     {
-        //currentTargetPosition = patrolTarget.position;
         if (navMeshAgent != null && patrolTarget != null)
         {
             navMeshAgent.SetDestination(patrolTarget.position);
@@ -130,8 +117,6 @@ public class HumanController : BaseCharacter
                 currentHideAreaIndex = i;
             }
         }
-
-        //currentTargetPosition = hideAreas[currentHideAreaIndex].position;
 
         if (navMeshAgent != null)
         {
