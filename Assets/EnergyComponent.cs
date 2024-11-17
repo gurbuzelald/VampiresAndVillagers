@@ -43,6 +43,7 @@ public class EnergyComponent : MonoBehaviour
             else
             {
                 OnDecreaseEnergy?.Invoke();
+                isEnergyZero = false;
             }
 
             OnEnergyChanged?.Invoke(Energy);

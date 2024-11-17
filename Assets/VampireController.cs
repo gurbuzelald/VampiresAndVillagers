@@ -79,13 +79,7 @@ public class VampireController : BaseCharacter
             else
             {
                 baseCharacter = null;
-
-                if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
-                {
-                    _currentTargetIndex = Random.Range(0, _targets.Length);
-                }
-
-                navMeshAgent.SetDestination(_targets[_currentTargetIndex].position);
+                return;
             }
         }
 
