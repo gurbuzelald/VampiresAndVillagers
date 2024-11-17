@@ -98,12 +98,9 @@ public class HumanController : BaseCharacter
     {
         if (patrolTarget != null)
         {
-            navMeshAgent?.SetDestination(patrolTarget.position);
+            navMeshAgent.SetDestination(patrolTarget.position);
 
-            if (navMeshAgent)
-            {
-                navMeshAgent.isStopped = false;
-            }
+            navMeshAgent.isStopped = false;
         }
 
     }
@@ -121,20 +118,15 @@ public class HumanController : BaseCharacter
                 currentHideAreaIndex = i;
             }
         }
-        if (navMeshAgent)
+        navMeshAgent.SetDestination(hideAreas[currentHideAreaIndex].position);
+
+        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < .5f)
         {
-            navMeshAgent.SetDestination(hideAreas[currentHideAreaIndex].position);
-
-            if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 1)
-            {
-                navMeshAgent.isStopped = true;
-                currentState = State.Hiding;
-            }
-
-            StartCoroutine(DeactivateHiding(hiddenTime));
+            navMeshAgent.isStopped = true;
+            currentState = State.Hiding;
         }
 
-        
+        StartCoroutine(DeactivateHiding(hiddenTime));
     }
 
     private void CheckForVampires(RaycastHit[] hits)
