@@ -20,6 +20,8 @@ public class HumanController : BaseCharacter
 
     private RaycastHit[] hits;
 
+    private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
 
     private void Awake()
     {
@@ -48,13 +50,15 @@ public class HumanController : BaseCharacter
         {
             _targets[i] = pointsSingleton.humanTargetsObject.GetChild(i);
         }
+
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
     void Update()
     {
         hits = CheckAround(transform, radius, layerMask);
 
-        MoveTowardsCurrentTarget();
+        //MoveTowardsCurrentTarget();
 
         SetRandomTargetIndex();
 
@@ -92,7 +96,7 @@ public class HumanController : BaseCharacter
         {
             case State.Patrolling:
                 Patrol(ref currentTargetPosition, patrolTarget);
-                CheckForVampires(hits); // Transition to Escaping if vampires are detected
+                CheckForVampires(hits);
                 break;
 
             case State.Escaping:
@@ -106,7 +110,11 @@ public class HumanController : BaseCharacter
 
     private void Patrol(ref Vector3 currentTargetPosition, Transform patrolTarget)
     {
-        currentTargetPosition = patrolTarget.position;
+        //currentTargetPosition = patrolTarget.position;
+        if (navMeshAgent != null && patrolTarget != null)
+        {
+            navMeshAgent.SetDestination(patrolTarget.position);
+        }
     }
 
     private void Escape(ref Vector3 currentTargetPosition)
@@ -123,9 +131,14 @@ public class HumanController : BaseCharacter
             }
         }
 
-        currentTargetPosition = hideAreas[currentHideAreaIndex].position;
+        //currentTargetPosition = hideAreas[currentHideAreaIndex].position;
 
-        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 0.1f)
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.SetDestination(hideAreas[currentHideAreaIndex].position);
+        }
+
+        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 1)
         {
             currentState = State.Hiding;
             StartCoroutine(DeactivateHiding(hiddenTime));
@@ -147,6 +160,7 @@ public class HumanController : BaseCharacter
     private IEnumerator DeactivateHiding(float hiddenTime)
     {
         yield return new WaitForSeconds(hiddenTime);
+
         currentState = State.Patrolling;
     }
 }
