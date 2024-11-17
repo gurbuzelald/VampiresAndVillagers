@@ -22,6 +22,8 @@ public class ItemEntity : MonoBehaviour
 
     public bool isGrabbed;
 
+    public Entity grabedEntity;
+
     private void Awake()
     {
         trigerCollider = GetComponent<SphereCollider>();

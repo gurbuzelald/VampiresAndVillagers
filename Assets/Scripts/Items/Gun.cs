@@ -10,6 +10,10 @@ public class Gun :ItemEntity
 
     public int maxBulletInClip;
 
+    public float bulletDamageOfGun;
+
+    public float bulletSpeedOfGun;
+
     public void ChangeClip()
     {
         int totalAmount = totalBulletInClip;
@@ -35,6 +39,19 @@ public class Gun :ItemEntity
         }
     }
 
+    bool isFire;
+
+    IEnumerator GunAnimation()
+    {
+        isFire = true;
+        Vector3 originalPosition = transform.localPosition;
+        transform.localPosition += new Vector3(0, 0, -0.1f);
+        yield return new WaitForSeconds(0.05f);
+        transform.localPosition = originalPosition;
+        isFire = false;
+
+    }
+
     private void Update()
     {
         if (!isGrabbed)
@@ -42,6 +59,8 @@ public class Gun :ItemEntity
             return;
         }
 
+        if (isFire)
+            return;
         if (Input.GetMouseButtonDown(0))
         {
             Fire();
@@ -58,6 +77,13 @@ public class Gun :ItemEntity
         if (totalBulletInClip > 0)
         {
             totalBulletInClip--;
+
+            StartCoroutine(GunAnimation());
+            Bullet bullet = BulletPoll.Instance.GetBullet();
+
+            bullet.SetBullet(bulletDamageOfGun,bulletSpeedOfGun);
+
+            bullet.gameObject.SetActive(true);
         }
         else
         {

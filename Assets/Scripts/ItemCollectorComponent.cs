@@ -53,6 +53,7 @@ public class ItemCollectorComponent : MonoBehaviour
                     }
 
                     targetItem.SetGrabbedState(true);
+                    targetItem.grabedEntity = GetComponentInParent<Entity>();
                     targetItem.transform.parent = this.transform;
                     targetItem.transform.localRotation = Quaternion.identity;
                     targetItem.transform.localPosition = Vector3.up + Vector3.forward;
