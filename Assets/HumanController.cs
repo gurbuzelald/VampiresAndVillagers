@@ -12,8 +12,6 @@ public class HumanController : BaseCharacter
     
     [SerializeField] float radius;
 
-    public Vector3 currentTargetPosition;
-
     private PointsSingleton pointsSingleton;
 
     [SerializeField] LayerMask layerMask;
@@ -60,7 +58,7 @@ public class HumanController : BaseCharacter
 
         SetRandomTargetIndex();
 
-        HandleStates(hits, ref currentTargetPosition, _targets[_currentTargetIndex]);
+        HandleStates(hits, _targets[_currentTargetIndex]);
     }
 
     void SetRandomTargetIndex()
@@ -78,17 +76,17 @@ public class HumanController : BaseCharacter
     }
 
 
-    public void HandleStates(RaycastHit[] hits, ref Vector3 currentTargetPosition, Transform patrolTarget)
+    public void HandleStates(RaycastHit[] hits, Transform patrolTarget)
     {
         switch (currentState)
         {
             case State.Patrolling:
-                Patrol(ref currentTargetPosition, patrolTarget);
+                Patrol(patrolTarget);
                 CheckForVampires(hits);
                 break;
 
             case State.Escaping:
-                Escape(ref currentTargetPosition);
+                Escape();
                 break;
 
             case State.Hiding:
@@ -96,15 +94,21 @@ public class HumanController : BaseCharacter
         }
     }
 
-    private void Patrol(ref Vector3 currentTargetPosition, Transform patrolTarget)
+    private void Patrol(Transform patrolTarget)
     {
-        if (navMeshAgent != null && patrolTarget != null)
+        if (patrolTarget != null)
         {
-            navMeshAgent.SetDestination(patrolTarget.position);
+            navMeshAgent?.SetDestination(patrolTarget.position);
+
+            if (navMeshAgent)
+            {
+                navMeshAgent.isStopped = false;
+            }
         }
+
     }
 
-    private void Escape(ref Vector3 currentTargetPosition)
+    private void Escape()
     {
         float nearestDistance = Mathf.Infinity;
 
@@ -117,17 +121,20 @@ public class HumanController : BaseCharacter
                 currentHideAreaIndex = i;
             }
         }
-
-        if (navMeshAgent != null)
+        if (navMeshAgent)
         {
             navMeshAgent.SetDestination(hideAreas[currentHideAreaIndex].position);
-        }
 
-        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 1)
-        {
-            currentState = State.Hiding;
+            if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 1)
+            {
+                navMeshAgent.isStopped = true;
+                currentState = State.Hiding;
+            }
+
             StartCoroutine(DeactivateHiding(hiddenTime));
         }
+
+        
     }
 
     private void CheckForVampires(RaycastHit[] hits)
@@ -147,5 +154,9 @@ public class HumanController : BaseCharacter
         yield return new WaitForSeconds(hiddenTime);
 
         currentState = State.Patrolling;
+
+        navMeshAgent.isStopped = false;
+
+        yield return null;
     }
 }

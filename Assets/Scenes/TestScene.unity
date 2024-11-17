@@ -1638,7 +1638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  hiddenTime: 3
+  hiddenTime: 5
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
   currentHideAreaIndex: 0
