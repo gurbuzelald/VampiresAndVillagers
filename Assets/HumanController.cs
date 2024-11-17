@@ -87,12 +87,12 @@ public class HumanController : BaseCharacter
             case State.Patrolling:
                 Patrol(patrolTarget);
                 CheckForVampires(hits);
-                navMeshAgent.speed = 10f;
+                navMeshAgent.speed = speed;
                 break;
 
             case State.Escaping:
                 Escape();
-                navMeshAgent.speed = 15f;
+                navMeshAgent.speed = speed * 1.5f;
                 break;
 
             case State.Hiding:

@@ -64,11 +64,16 @@ public class EnergyComponent : MonoBehaviour
             }
             else
             {
+
+                Debug.Log("2");
                 Energy += addValue;
 
                 lastEnergyTime = Time.time;
             }
-            isEnergyZero = false;
+            if (isEnergyZero)
+            {
+                isEnergyZero = false;
+            }            
         }
     }
 

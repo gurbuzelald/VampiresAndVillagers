@@ -449,7 +449,7 @@ MonoBehaviour:
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
   currentHideAreaIndex: 0
-  speed: 5
+  speed: 13
   radius: 6
   decreaseHealthValue: 2
 --- !u!54 &429802441

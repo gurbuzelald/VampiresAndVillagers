@@ -95,7 +95,7 @@ public class VampireController : BaseCharacter
         {
             currentState = State.Patrolling;
 
-            navMeshAgent.speed = 13;
+            navMeshAgent.speed = speed;
         }
         else
         {
@@ -111,18 +111,20 @@ public class VampireController : BaseCharacter
 
                 if (!energyComponent.isEnergyZero)
                 {
-                    navMeshAgent.speed = 18;
+                    navMeshAgent.speed = speed * 1.5f;
                 }
                 else
                 {
-                    navMeshAgent.speed = 13;
+                    navMeshAgent.speed = speed;
                 }
 
                 if (attackComponent.IsAttackable(baseCharacter.transform))
                 {
                     currentState = State.Attacking;
 
-                    energyComponent.IncreaseEnergy(10);
+                    energyComponent.IncreaseEnergy(20);
+
+                    Debug.Log("1");
                 }
             }
             else
