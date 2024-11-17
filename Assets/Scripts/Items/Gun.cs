@@ -14,6 +14,8 @@ public class Gun :ItemEntity
 
     public float bulletSpeedOfGun;
 
+    public ParticleSystem muzzleParticle;
+
     public void ChangeClip()
     {
         int totalAmount = totalBulletInClip;
@@ -44,6 +46,7 @@ public class Gun :ItemEntity
     IEnumerator GunAnimation()
     {
         isFire = true;
+        muzzleParticle.Play();
         Vector3 originalPosition = transform.localPosition;
         transform.localPosition += new Vector3(0, 0, -0.1f);
         yield return new WaitForSeconds(0.05f);
