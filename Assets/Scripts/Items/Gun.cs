@@ -16,6 +16,8 @@ public class Gun :ItemEntity
 
     public ParticleSystem muzzleParticle;
 
+    public Transform bulletSpawnPoint;
+
     public void ChangeClip()
     {
         int totalAmount = totalBulletInClip;
@@ -82,7 +84,18 @@ public class Gun :ItemEntity
             totalBulletInClip--;
 
             StartCoroutine(GunAnimation());
+
             Bullet bullet = BulletPoll.Instance.GetBullet();
+
+            Vector3 targetPointBullet = grabedEntity.heroPlayerController.transform.forward * 1000;
+
+            Vector3 bulletSpawnPointPosition = bulletSpawnPoint.position;
+      
+            bullet.transform.position = bulletSpawnPointPosition;
+
+            Vector3 direction = (targetPointBullet - bulletSpawnPointPosition).normalized;
+
+            bullet.transform.rotation = Quaternion.LookRotation(direction,Vector3.up); 
 
             bullet.SetBullet(bulletDamageOfGun,bulletSpeedOfGun);
 
