@@ -205,12 +205,14 @@ public class ItemCollectorComponent : MonoBehaviour
         {
             bagComponent.RemoveItem(rightHand.currentItemOnHand);
             rightHand.currentItemOnHand.SetGrabbedState(false);
+            rightHand.currentItemOnHand = null;
             SwapItemToHand(rightHand,leftHand);
         }
         else if (leftHand.currentItemOnHand != null)
         {
             bagComponent.RemoveItem(leftHand.currentItemOnHand);
             leftHand.currentItemOnHand.SetGrabbedState(false);
+            leftHand.currentItemOnHand = null;
         }
     
     }
