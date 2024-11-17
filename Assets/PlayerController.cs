@@ -48,7 +48,7 @@ public class PlayerController : BaseCharacter
 
         if (horizontal == 0 && vertical == 0)
         {
-            energyComponent.IncreaseEnergy(1);
+            energyComponent.IncreaseEnergy(1);            
         }
 
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical);

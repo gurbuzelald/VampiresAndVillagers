@@ -68,6 +68,7 @@ public class EnergyComponent : MonoBehaviour
 
                 lastEnergyTime = Time.time;
             }
+            isEnergyZero = false;
         }
     }
 

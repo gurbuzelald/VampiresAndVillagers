@@ -125,11 +125,6 @@ public class HumanController : BaseCharacter
 
         navMeshAgent.SetDestination(hideAreas[currentHideAreaIndex].position);
 
-        if (!energyComponent.isEnergyZero)
-        {
-            energyComponent.DecreseEnergy(1);
-        }
-
         if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 1f)
         {
             navMeshAgent.isStopped = true;
@@ -138,6 +133,16 @@ public class HumanController : BaseCharacter
         if (currentState == State.Hiding)
         {
             StartCoroutine(DeactivateHiding(hiddenTime));
+        }
+
+        if (!energyComponent.isEnergyZero && currentState == State.Escaping)
+        {
+            energyComponent.DecreseEnergy(1);
+            navMeshAgent.speed *= 1.5f;
+        }
+        else
+        {
+            navMeshAgent.speed /= 1.5f;
         }
     }
 
@@ -148,6 +153,7 @@ public class HumanController : BaseCharacter
             if (hit.collider.CompareTag("Vampire"))
             {
                 currentState = State.Escaping;
+
                 return;
             }
         }
