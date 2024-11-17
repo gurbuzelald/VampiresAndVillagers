@@ -10,9 +10,6 @@ public class HumanController : BaseCharacter
     
     private int _currentTargetIndex = 0;
     
-
-    private RaycastHit[] hit;
-
     [SerializeField] float radius;
 
     public Vector3 currentTargetPosition;
@@ -48,20 +45,21 @@ public class HumanController : BaseCharacter
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        RaycastHit[] hits = CheckAround(transform, radius, layerMask);
+
         MoveTowardsCurrentTarget();
 
         SetRandomTargetIndex();
 
-        HumanStates(CheckAround(ref hit, transform, radius, ref layerMask), ref currentTargetPosition, _targets[_currentTargetIndex],
-                    ref isHidding, ref isEscaping, ref isPatrolling);
+        HandleStates(hits, ref currentTargetPosition, _targets[_currentTargetIndex]);
     }
 
     void SetRandomTargetIndex()
     {
         if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f
-            && !isHidding)
+            && currentState != State.Hiding)
         {
             _currentTargetIndex = Random.RandomRange(0, _targets.Length);
         }
@@ -69,11 +67,16 @@ public class HumanController : BaseCharacter
 
     private void MoveTowardsCurrentTarget()
     {
-        if (!isHidding)
+        if (currentState != State.Hiding)
         {
             transform.LookAt(currentTargetPosition);
 
             transform.position = Vector3.MoveTowards(transform.position, currentTargetPosition, speed * Time.deltaTime);
         }
+    }
+
+    private RaycastHit[] CheckAround(Transform _transform, float radius, LayerMask layerMask)
+    {
+        return Physics.SphereCastAll(_transform.position, radius, _transform.forward, radius, layerMask);
     }
 }

@@ -441,13 +441,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba785e83c9fa41c7975562a453015c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHidding: 0
-  isEscaping: 0
-  isPatrolling: 0
+  currentState: 0
   hiddenTime: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  checkRadius: 0
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
-  currentHideAreaIndex: 0
   speed: 2
   radius: 5
   decreaseHealthValue: 2
@@ -1285,13 +1286,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439b83e4bc7664d7eb93b5be118edb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHidding: 0
-  isEscaping: 0
-  isPatrolling: 0
+  currentState: 0
   hiddenTime: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  checkRadius: 0
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
-  currentHideAreaIndex: 0
   moveSpeed: 20
   jumpForce: 30
   cameraTransform: {fileID: 388979225}
@@ -1640,19 +1642,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21bda9a1f8abc45d4ae8c233852fd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHidding: 0
-  isEscaping: 0
-  isPatrolling: 0
+  currentState: 0
   hiddenTime: 3
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  checkRadius: 6
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
-  currentHideAreaIndex: 0
   speed: 3
   radius: 6
   currentTargetPosition: {x: 0, y: 0, z: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 2560
+    m_Bits: 2048
 --- !u!114 &1989464946
 MonoBehaviour:
   m_ObjectHideFlags: 0

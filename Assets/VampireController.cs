@@ -64,7 +64,7 @@ public class VampireController : BaseCharacter
         }
         else
         {
-            if (InDistance(baseCharacter.transform.position) && !baseCharacter.isHidding)
+            if (InDistance(baseCharacter.transform.position) && baseCharacter.currentState != State.Hiding)
             {
                 MoveTowardsCurrentTarget(baseCharacter.transform);
 
@@ -131,13 +131,13 @@ public class VampireController : BaseCharacter
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].CompareTag("Human") &&
-                !hit[i].gameObject.GetComponent<BaseCharacter>().isHidding)
+                hit[i].gameObject.GetComponent<BaseCharacter>().currentState != State.Hiding)
             {
                 float tempMinDistance = Vector3.Distance(transform.position, hit[i].gameObject.transform.position);
                 BaseCharacter newCharacterTarget = hit[i].gameObject.GetComponent<BaseCharacter>();
 
                 if (tempMinDistance < nearestDistance &&
-                    !newCharacterTarget.isHidding)
+                    newCharacterTarget.currentState != State.Hiding)
                 {
                     nearestDistance = tempMinDistance;
 

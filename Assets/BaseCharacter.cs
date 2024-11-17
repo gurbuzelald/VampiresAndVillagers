@@ -4,121 +4,90 @@ using UnityEngine;
 
 public class BaseCharacter : MonoBehaviour
 {
-    public bool isHidding;
-    public bool isEscaping;
-    public bool isPatrolling;
+    public enum State
+    {
+        Patrolling,
+        Escaping,
+        Hiding
+    }
 
+    public State currentState;
 
-    [SerializeField] float hiddenTime;
+    [SerializeField] private float hiddenTime;
 
     public Transform _hideAreasObject;
-
     public Transform[] hideAreas;
 
-    public int currentHideAreaIndex = 0;
+    private int currentHideAreaIndex = 0;
 
-
-    void Awake()
+    private void Awake()
     {
-        isHidding = false;
-
+        currentState = State.Patrolling;
         currentHideAreaIndex = 0;
     }
 
-    public void Hide(ref bool isHidding, ref bool isEscaping, ref bool isPatrolling)
+
+    public void HandleStates(RaycastHit[] hits, ref Vector3 currentTargetPosition, Transform patrolTarget)
     {
-        if (isEscaping)
+        switch (currentState)
         {
-            float nearestDistance = Mathf.Infinity;
+            case State.Patrolling:
+                Patrol(ref currentTargetPosition, patrolTarget);
+                CheckForVampires(hits); // Transition to Escaping if vampires are detected
+                break;
 
-            for (int i = 0; i < hideAreas.Length; i++)
+            case State.Escaping:
+                Escape(ref currentTargetPosition);
+                break;
+
+            case State.Hiding:
+                break;
+        }
+    }
+
+    private void Patrol(ref Vector3 currentTargetPosition, Transform patrolTarget)
+    {
+        currentTargetPosition = patrolTarget.position;
+    }
+
+    private void Escape(ref Vector3 currentTargetPosition)
+    {
+        float nearestDistance = Mathf.Infinity;
+
+        for (int i = 0; i < hideAreas.Length; i++)
+        {
+            float tempDistance = Vector3.Distance(transform.position, hideAreas[i].position);
+            if (tempDistance < nearestDistance)
             {
-                float tempMinDistance = Vector3.Distance(transform.position, hideAreas[i].position);
-
-                if (tempMinDistance < nearestDistance)
-                {
-                    nearestDistance = tempMinDistance;
-
-                    currentHideAreaIndex = i;
-                }
+                nearestDistance = tempDistance;
+                currentHideAreaIndex = i;
             }
+        }
 
-            if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < .1f)
+        currentTargetPosition = hideAreas[currentHideAreaIndex].position;
+
+        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 0.1f)
+        {
+            currentState = State.Hiding;
+            StartCoroutine(DeactivateHiding(hiddenTime));
+        }
+    }
+
+    private void CheckForVampires(RaycastHit[] hits)
+    {
+        foreach (var hit in hits)
+        {
+            if (hit.collider.CompareTag("Vampire"))
             {
-                isHidding = true;
-                isEscaping = false;
-                isPatrolling = false;
-
-                StartCoroutine(DeActivateHidding(hiddenTime));
+                currentState = State.Escaping;
+                return;
             }
         }
     }
 
-    IEnumerator DeActivateHidding(float hiddenTime)
+    private IEnumerator DeactivateHiding(float hiddenTime)
     {
         yield return new WaitForSeconds(hiddenTime);
-
-        if (isHidding)
-        {
-            isHidding = false;
-
-            isPatrolling = true;
-        }
-        yield return null;
-    }
-
-    public void HumanStates(RaycastHit[] hit, ref Vector3 currentTargetPosition, Transform patrolTarget,
-                            ref bool isHidding, ref bool isEscaping, ref bool isPatrolling)
-    {
-        Hide(ref isHidding, ref isEscaping, ref isPatrolling);
-
-        Patrol(hit, ref currentTargetPosition, patrolTarget,
-              ref isHidding, ref isEscaping, ref isPatrolling);
-
-        Escape(hit, ref currentTargetPosition,
-               ref isHidding, ref isEscaping, ref isPatrolling);
-    }
-
-    public void Patrol(RaycastHit[] hit, ref Vector3 currentTarget, Transform patrolTarget,
-                       ref bool isHidding, ref bool isEscaping, ref bool isPatrolling)
-    {
-        for (int i = 0; i < hit.Length; i++)
-        {
-            if (!isHidding && !isPatrolling)
-            {
-                currentTarget = patrolTarget.position;
-
-                isPatrolling = true;
-            }
-            else
-            {
-                isPatrolling = false;
-            }
-        }
-    }
-
-    public void Escape(RaycastHit[] hit, ref Vector3 currentTarget,
-                       ref bool isHidding, ref bool isEscaping, ref bool isPatrolling)
-    {
-        for (int i = 0; i < hit.Length; i++)
-        {
-            if (hit[i].collider.CompareTag("Vampire") && !isHidding && !isEscaping)
-            {
-                currentTarget = hideAreas[currentHideAreaIndex].position;
-
-                isEscaping = true;
-            }
-            else
-            {
-                isEscaping = false;
-            }
-        }
-    }
-
-    public RaycastHit[] CheckAround(ref RaycastHit[] hit, Transform _transform, float radius, ref LayerMask layerMask)
-    {
-        hit = Physics.SphereCastAll(_transform.position, radius, _transform.forward, radius, layerMask);
-
-        return hit;
+        currentState = State.Patrolling;
     }
 }
