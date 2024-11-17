@@ -26,6 +26,8 @@ public class VampireController : BaseCharacter
 
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
 
+    private RaycastHit[] hits;
+
     private void Awake()
     {
         attackComponent = GetComponent<AttackComponent>();
@@ -44,39 +46,72 @@ public class VampireController : BaseCharacter
         }
 
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+
+        _hideAreasObject = pointsSingleton.hideAreasObject;
+
+        int hideAreaID = _hideAreasObject.childCount;
+
+        hideAreas = new Transform[hideAreaID];
+
+        for (int i = 0; i < hideAreaID; i++)
+        {
+            hideAreas[i] = _hideAreasObject.GetChild(i);
+        }
     }
 
     void Update()
     {
+        HandleStates(_targets[_currentTargetIndex]);
         HandleMovementAndAttack();
 
         DecreaseHealth();
+    }
+
+    public void HandleStates(Transform patrolTarget)
+    {
+        switch (currentState)
+        {
+            case State.Patrolling:
+                Patrol(patrolTarget);
+                break;
+
+            case State.Escaping:
+                Escape();
+                break;
+            case State.Hiding:
+                break;
+            case State.Attacking:
+                Attack();
+                break;
+        }
     }
 
     private void HandleMovementAndAttack()
     {
         if (baseCharacter == null)
         {
-            if (Vector3.Distance(transform.position, _targets[_currentTargetIndex].position) < 0.1f)
-            {
-                _currentTargetIndex = Random.Range(0, _targets.Length);
-            }
-            navMeshAgent.SetDestination(_targets[_currentTargetIndex].position);
+            currentState = State.Patrolling;
         }
         else
         {
-            if (InDistance(baseCharacter.transform.position) && baseCharacter.currentState != State.Hiding)
+            if (baseCharacter.haveGun && healthComponent.Health <= 30)
+            {
+                currentState = State.Escaping;
+            }
+            else if (InDistance(baseCharacter.transform.position) && baseCharacter.currentState != State.Hiding)
             {
                 navMeshAgent.SetDestination(baseCharacter.transform.position);
 
                 if (attackComponent.IsAttackable(baseCharacter.transform))
                 {
-                    attackComponent.Attack(baseCharacter.transform);
-                    healthComponent.AddHealth(10);
+                    currentState = State.Attacking;
                 }
             }
             else
             {
+                currentState = State.Patrolling;
+
                 baseCharacter = null;
                 return;
             }
@@ -133,5 +168,60 @@ public class VampireController : BaseCharacter
                 }
             }
         }
+    }
+    private void Attack()
+    {
+        if (baseCharacter == null) return;
+        attackComponent.Attack(baseCharacter.transform);
+        healthComponent.AddHealth(10);
+        currentState = State.Patrolling;
+    }
+
+    private void Patrol(Transform patrolTarget)
+    {
+        if (Vector3.Distance(transform.position, patrolTarget.position) < 0.1f)
+        {
+            _currentTargetIndex = Random.Range(0, _targets.Length);
+        }
+
+        navMeshAgent.SetDestination(patrolTarget.position);
+    }
+
+    private void Escape()
+    {
+        float nearestDistance = Mathf.Infinity;
+
+        for (int i = 0; i < hideAreas.Length; i++)
+        {
+            float tempDistance = Vector3.Distance(transform.position, hideAreas[i].position);
+            if (tempDistance < nearestDistance)
+            {
+                nearestDistance = tempDistance;
+                currentHideAreaIndex = i;
+            }
+        }
+
+        navMeshAgent.SetDestination(hideAreas[currentHideAreaIndex].position);
+
+        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < .5f)
+        {
+            navMeshAgent.isStopped = true;
+            currentState = State.Hiding;
+        }
+        if (currentState == State.Hiding)
+        {
+            StartCoroutine(DeactivateHiding(hiddenTime));
+        }
+    }
+
+    private IEnumerator DeactivateHiding(float hiddenTime)
+    {
+        yield return new WaitForSeconds(hiddenTime);
+
+        currentState = State.Patrolling;
+
+        navMeshAgent.isStopped = false;
+
+        yield return null;
     }
 }

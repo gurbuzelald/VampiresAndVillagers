@@ -443,7 +443,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  hiddenTime: 10
+  haveGun: 0
+  hiddenTime: 3
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
   currentHideAreaIndex: 0
@@ -505,7 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  Health: 100
+  Health: 30
   initialHealth: 100
 --- !u!195 &429802444
 NavMeshAgent:
@@ -1308,6 +1309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  haveGun: 1
   hiddenTime: 10
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
@@ -1680,6 +1682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  haveGun: 1
   hiddenTime: 10
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []

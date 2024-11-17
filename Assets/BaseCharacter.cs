@@ -8,10 +8,13 @@ public class BaseCharacter : MonoBehaviour
     {
         Patrolling,
         Escaping,
-        Hiding
+        Hiding,
+        Attacking
     }
 
     public State currentState;
+
+    public bool haveGun;
 
     public float hiddenTime;
 
@@ -19,5 +22,4 @@ public class BaseCharacter : MonoBehaviour
     public Transform[] hideAreas;
 
     public int currentHideAreaIndex = 0;
-
 }
