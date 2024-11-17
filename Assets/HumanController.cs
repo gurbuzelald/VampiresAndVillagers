@@ -87,10 +87,12 @@ public class HumanController : BaseCharacter
             case State.Patrolling:
                 Patrol(patrolTarget);
                 CheckForVampires(hits);
+                navMeshAgent.speed = 10f;
                 break;
 
             case State.Escaping:
                 Escape();
+                navMeshAgent.speed = 15f;
                 break;
 
             case State.Hiding:
@@ -137,12 +139,7 @@ public class HumanController : BaseCharacter
 
         if (!energyComponent.isEnergyZero && currentState == State.Escaping)
         {
-            energyComponent.DecreseEnergy(1);
-            navMeshAgent.speed *= 1.5f;
-        }
-        else
-        {
-            navMeshAgent.speed /= 1.5f;
+            energyComponent.DecreseEnergy(1);            
         }
     }
 
