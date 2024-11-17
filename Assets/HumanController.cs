@@ -18,6 +18,8 @@ public class HumanController : BaseCharacter
 
     [SerializeField] LayerMask layerMask;
 
+    private RaycastHit[] hits;
+
 
     private void Awake()
     {
@@ -45,9 +47,9 @@ public class HumanController : BaseCharacter
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        RaycastHit[] hits = CheckAround(transform, radius, layerMask);
+        hits = CheckAround(transform, radius, layerMask);
 
         MoveTowardsCurrentTarget();
 
