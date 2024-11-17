@@ -20,9 +20,13 @@ public class HumanController : BaseCharacter
 
     private UnityEngine.AI.NavMeshAgent navMeshAgent;
 
+    private EnergyComponent energyComponent;
+
 
     private void Awake()
     {
+        energyComponent = GetComponent<EnergyComponent>();
+
         currentState = State.Patrolling;
         currentHideAreaIndex = 0;
 
@@ -90,6 +94,7 @@ public class HumanController : BaseCharacter
                 break;
 
             case State.Hiding:
+                energyComponent.IncreaseEnergy(1);
                 break;
         }
     }
@@ -117,15 +122,23 @@ public class HumanController : BaseCharacter
                 currentHideAreaIndex = i;
             }
         }
+
         navMeshAgent.SetDestination(hideAreas[currentHideAreaIndex].position);
 
-        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < .5f)
+        if (!energyComponent.isEnergyZero)
+        {
+            energyComponent.DecreseEnergy(1);
+        }
+
+        if (Vector3.Distance(transform.position, hideAreas[currentHideAreaIndex].position) < 1f)
         {
             navMeshAgent.isStopped = true;
             currentState = State.Hiding;
         }
-
-        StartCoroutine(DeactivateHiding(hiddenTime));
+        if (currentState == State.Hiding)
+        {
+            StartCoroutine(DeactivateHiding(hiddenTime));
+        }
     }
 
     private void CheckForVampires(RaycastHit[] hits)

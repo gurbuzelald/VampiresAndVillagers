@@ -1546,6 +1546,7 @@ GameObject:
   - component: {fileID: 1989464945}
   - component: {fileID: 1989464946}
   - component: {fileID: 1989464947}
+  - component: {fileID: 1989464948}
   m_Layer: 0
   m_Name: Human
   m_TagString: Human
@@ -1679,7 +1680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  hiddenTime: 5
+  hiddenTime: 10
   _hideAreasObject: {fileID: 1094070255}
   hideAreas: []
   currentHideAreaIndex: 0
@@ -1725,6 +1726,23 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1989464948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989464938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e308e427f96c4c8798439ca4492a869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnergyZero: 0
+  Energy: 10
+  initialEnergy: 10
+  lastEnergyTime: 0
+  energyLoopTime: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
