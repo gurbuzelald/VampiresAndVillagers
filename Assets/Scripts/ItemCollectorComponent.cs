@@ -207,10 +207,17 @@ public class ItemCollectorComponent : MonoBehaviour
             rightHand.currentItemOnHand.SetGrabbedState(false);
             DiscardItem?.Invoke(rightHand.currentItemOnHand);
             rightHand.currentItemOnHand = null;
-            SwapItemToHand(rightHand,leftHand);
+
+            if (leftHand.currentItemOnHand != null)
+            {
+                ItemEntity itemEntity = leftHand.currentItemOnHand;
+                AddItemToBage(leftHand);
+                SetItemToHand(rightHand,itemEntity);
+            }
         }
         else if (leftHand.currentItemOnHand != null)
         {
+            Debug.LogError("Drop 2");
             bagComponent.RemoveItem(leftHand.currentItemOnHand);
             leftHand.currentItemOnHand.SetGrabbedState(false);
             DiscardItem?.Invoke(leftHand.currentItemOnHand);
@@ -225,24 +232,23 @@ public class ItemCollectorComponent : MonoBehaviour
             hand.currentItemOnHand.gameObject.SetActive(false);
             DiscardItem?.Invoke(hand.currentItemOnHand);
             hand.currentItemOnHand = null;
-
         }
     }
 
     public void SwapItemToHand(Hand currentItemHand,Hand targetItemHand)
     {
-        ItemEntity itemEntity = currentItemHand.currentItemOnHand;
+        ItemEntity handOneItem = currentItemHand.currentItemOnHand;
 
-        ItemEntity itemEntity2 = targetItemHand.currentItemOnHand;
+        ItemEntity handTwoItem = targetItemHand.currentItemOnHand;
 
-        if (itemEntity != null)
+        if (handOneItem != null)
         {
-            SetItemToHand(targetItemHand,itemEntity);
+            SetItemToHand(targetItemHand,handOneItem);
         }
 
-        if (itemEntity2 != null)
+        if (handTwoItem != null)
         {
-            SetItemToHand(currentItemHand, itemEntity2);
+            SetItemToHand(currentItemHand, handTwoItem);
         }
     }
 }
