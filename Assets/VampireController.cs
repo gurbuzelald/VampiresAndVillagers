@@ -9,13 +9,13 @@ public class VampireController : BaseCharacter
     private Transform[] _targets;
     private int _currentTargetIndex = 0;
 
-    private RaycastHit[] hit;
-
     [SerializeField] float radius;
 
     private AttackComponent attackComponent;
 
     private HealthComponent healthComponent;
+
+    private EnergyComponent energyComponent;
 
     [SerializeField] float decreaseHealthValue;
     private float lastDecreaseTime;
@@ -32,6 +32,7 @@ public class VampireController : BaseCharacter
     {
         attackComponent = GetComponent<AttackComponent>();
         healthComponent = GetComponent<HealthComponent>();
+        energyComponent = GetComponent<EnergyComponent>();
         pointsSingleton = FindAnyObjectByType<PointsSingleton>();
 
         baseCharacter = null;
@@ -80,6 +81,7 @@ public class VampireController : BaseCharacter
                 Escape();
                 break;
             case State.Hiding:
+                healthComponent.AddHealth(2);
                 break;
             case State.Attacking:
                 Attack();
@@ -92,6 +94,8 @@ public class VampireController : BaseCharacter
         if (baseCharacter == null)
         {
             currentState = State.Patrolling;
+
+            navMeshAgent.speed = 13;
         }
         else
         {
@@ -101,11 +105,24 @@ public class VampireController : BaseCharacter
             }
             else if (InDistance(baseCharacter.transform.position) && baseCharacter.currentState != State.Hiding)
             {
+                energyComponent.DecreseEnergy(1);
+
                 navMeshAgent.SetDestination(baseCharacter.transform.position);
+
+                if (!energyComponent.isEnergyZero)
+                {
+                    navMeshAgent.speed = 18;
+                }
+                else
+                {
+                    navMeshAgent.speed = 13;
+                }
 
                 if (attackComponent.IsAttackable(baseCharacter.transform))
                 {
                     currentState = State.Attacking;
+
+                    energyComponent.IncreaseEnergy(10);
                 }
             }
             else
@@ -122,7 +139,7 @@ public class VampireController : BaseCharacter
 
     private void DecreaseHealth()
     {
-        if (IsDecreaseHealth())
+        if (IsDecreaseHealth() && currentState != State.Hiding)
         {
             healthComponent.GetDamage(1);
 
