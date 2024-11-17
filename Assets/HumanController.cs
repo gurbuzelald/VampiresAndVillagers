@@ -102,7 +102,6 @@ public class HumanController : BaseCharacter
 
             navMeshAgent.isStopped = false;
         }
-
     }
 
     private void Escape()

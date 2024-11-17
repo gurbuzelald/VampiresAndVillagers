@@ -50,7 +50,7 @@ public class HealthComponent : MonoBehaviour
     {
         if (Health + addValue > initialHealth)
         {
-            Health = 100;
+            Health = initialHealth;
         }
         else
         {

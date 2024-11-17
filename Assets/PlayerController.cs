@@ -12,26 +12,44 @@ public class PlayerController : BaseCharacter
 
     [SerializeField] LayerMask layerMask;
 
+    private EnergyComponent energyComponent;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+
+        energyComponent = GetComponent<EnergyComponent>();
     }
 
     private void Update()
     {
-        HandleMovement();
         HandleCameraRotation();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             HandleJump();
         }
+        if (Input.GetKey(KeyCode.LeftShift) && !energyComponent.isEnergyZero)
+        {
+            HandleMovement(moveSpeed * 5);
+
+            energyComponent.DecreseEnergy(1);
+        }
+        else
+        {
+            HandleMovement(moveSpeed);
+        }
     }
 
-    private void HandleMovement()
+    private void HandleMovement(float moveSpeed)
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+
+        if (horizontal == 0 && vertical == 0)
+        {
+            energyComponent.IncreaseEnergy(1);
+        }
 
         Vector3 moveDirection = new Vector3(horizontal, 0f, vertical);
 
