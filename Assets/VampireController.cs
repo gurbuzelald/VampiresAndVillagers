@@ -24,6 +24,8 @@ public class VampireController : BaseCharacter
 
     private PointsSingleton pointsSingleton;
 
+    private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
     private void Awake()
     {
         attackComponent = GetComponent<AttackComponent>();
@@ -40,6 +42,8 @@ public class VampireController : BaseCharacter
         {
             _targets[i] = pointsSingleton.vampireTargetsObject.GetChild(i);
         }
+
+        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
     void Update()
@@ -58,15 +62,13 @@ public class VampireController : BaseCharacter
             {
                 _currentTargetIndex = Random.Range(0, _targets.Length);
             }
-
-            MoveTowardsCurrentTarget(_targets[_currentTargetIndex]);
-
+            navMeshAgent.SetDestination(_targets[_currentTargetIndex].position);
         }
         else
         {
             if (InDistance(baseCharacter.transform.position) && baseCharacter.currentState != State.Hiding)
             {
-                MoveTowardsCurrentTarget(baseCharacter.transform);
+                navMeshAgent.SetDestination(baseCharacter.transform.position);
 
                 if (attackComponent.IsAttackable(baseCharacter.transform))
                 {
@@ -83,18 +85,11 @@ public class VampireController : BaseCharacter
                     _currentTargetIndex = Random.Range(0, _targets.Length);
                 }
 
-                MoveTowardsCurrentTarget(_targets[_currentTargetIndex]);
+                navMeshAgent.SetDestination(_targets[_currentTargetIndex].position);
             }
         }
 
         SendRayToForward();
-    }
-
-    private void MoveTowardsCurrentTarget(Transform currentTarget)
-    {
-        Vector3 targetPosition = currentTarget.position;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        transform.LookAt(targetPosition);
     }
 
     private void DecreaseHealth()
@@ -112,7 +107,7 @@ public class VampireController : BaseCharacter
         return Time.time - lastDecreaseTime >= decreaseHealthValue;
     }
 
-    private bool IsDecreaseHealth(Transform target = null)
+    private bool IsDecreaseHealth()
     {
         return DecreaseHealthDelay();
     }
